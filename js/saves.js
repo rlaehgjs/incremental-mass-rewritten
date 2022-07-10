@@ -90,6 +90,7 @@ function calc(dt, dt_offline) {
         if (hasElement(24)) player.atom.points = player.atom.points.add(tmp.atom.gain.mul(du_gs))
         if (hasElement(30) && !(CHALS.inChal(9) || FERMIONS.onActive("12"))) for (let x = 0; x < 3; x++) player.atom.particles[x] = player.atom.particles[x].add(player.atom.quarks.mul(du_gs).div(10))
         if (hasElement(43)) for (let x = 0; x < MASS_DILATION.upgs.ids.length; x++) if ((hasTree("qol3") || player.md.upgs[x].gte(1)) && (MASS_DILATION.upgs.ids[x].unl?MASS_DILATION.upgs.ids[x].unl():true)) MASS_DILATION.upgs.buy(x)
+        if (hasTree("qu_qol13")) for (let x = 0; x < MASS_DILATION.break.upgs.ids.length; x++) MASS_DILATION.break.upgs.buy(x)
         if (player.bh.unl && !player.qu.en.hr[0]) player.bh.mass = player.bh.mass.add(tmp.bh.mass_gain.mul(du_gs))
         if (player.atom.unl) {
             player.atom.atomic = player.atom.atomic.add(tmp.atom.atomicGain.mul(du_gs))
@@ -141,6 +142,7 @@ function getPlayerData() {
             tier: E(0),
             tetr: E(0),
             pent: E(0),
+            hex: E(0),
         },
         auto_ranks: {
             rank: false,
@@ -368,7 +370,7 @@ function exporty() {
     window.URL = window.URL || window.webkitURL;
     let a = document.createElement("a")
     a.href = window.URL.createObjectURL(file)
-    a.download = "Incremental Mass Rewritten Save - "+new Date().toGMTString()+".txt"
+    a.download = "Incremental Mass Rewritten loader3229's NG+ Save - "+new Date().toGMTString()+".txt"
     a.click()
 }
 

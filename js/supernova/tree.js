@@ -29,19 +29,19 @@ const TREE_IDS = [
         ['s3','m3','gr2','sn3'],
         ['qol9','unl1','qol8','unl2','unl3','qu_qol8','qu_qol9','unl4'],
         ['chal5','chal6','chal7','chal8'],
-        ['fn12','fn11','fn6','fn10','rad6',""],
-        ['en1','qu5','br1'],
+        ['fn12','fn11','fn6','fn10','rad6',''],
+        ['prim4','en2','en1','qu5','br1','br2','qc4'],
     ],[
         ['s4','sn5','sn4'],
-        ['','','','qu_qol8a'],
-        [],
-        ['fn7','fn8'],
-        ['qu6','qu7','qu8','qu9','qu10','qu11'],
+        ['','','','qu_qol10','qu_qol11','qu_qol8a','qu_qol13','qu_qol12'],
+        ['chal9','chal10','chal11'],
+        ['fn13','fn14','fn7','fn8','',''],
+        ['prim5','qu6','qu7','qu8','qu9','qu10','qu11','qc5'],
     ],[
         [],
         [],
         [],
-        [],
+        ['fn15'],
         [],
     ],
 ]
@@ -360,6 +360,27 @@ const TREE_UPGS = {
             desc: `Add 200 more C9-12 completions.`,
             cost: E('e35000'),
         },
+        chal9: {
+			qf: true,
+            unl() { return player.atom.elements.includes(118) },
+            branch: ["chal8"],
+            desc: `Add 2000 more C9 completions.`,
+            cost: E(1e106),
+        },
+        chal10: {
+			qf: true,
+            unl() { return player.atom.elements.includes(118) },
+            branch: ["chal9"],
+            desc: `Add 500 more C10-11 completions.`,
+            cost: E(1e120),
+        },
+        chal11: {
+			qf: true,
+            unl() { return player.atom.elements.includes(118) },
+            branch: ["chal10"],
+            desc: `Add 500 more C9-11 completions.`,
+            cost: E(1e144),
+        },
         gr1: {
             branch: ["bh1"],
             desc: `BH Condensers power boost Cosmic Rays power.`,
@@ -502,6 +523,24 @@ const TREE_UPGS = {
             branch: ["fn3"],
             desc: `Pre-Meta Fermion's Tier is 10% weaker.`,
             cost: E('e960'),
+        },
+        fn13: {
+            unl() { return player.atom.elements.includes(118) },
+            branch: ["fn12"],
+            desc: `Remove [Neut-Muon]'s Hardcap.`,
+            cost: E('1e3500000'),
+        },
+        fn14: {
+            unl() { return player.atom.elements.includes(118) },
+            branch: ["fn11"],
+            desc: `[Strange], [Top], [Neutrino], [Neut-Muon] max tier is increased by 69. [Strange], [Top], [Neutrino], [Neut-Muon] Free Tiers from Epsilon Particles is unhardcapped.`,
+            cost: E('1e3900000'),
+        },
+        fn15: {
+            unl() { return player.atom.elements.includes(118) },
+            branch: ["fn14","fn8"],
+            desc: `[Bottom], [Neut-Tau] Free Tiers from Epsilon Particles is unhardcapped.`,
+            cost: E('1e9000000'),
         },
         d1: {
             unl() { return hasTree("fn6") },
@@ -789,6 +828,34 @@ const TREE_UPGS = {
             desc: `Start with Polonium–84 unlocked when entering in Quantum Challenge.`,
             cost: E(1e17),
         },
+        qu_qol10: {
+            qf: true,
+            branch: ["unl2"],
+            unl() { return hasElement(118) },
+            desc: `Automatically evaporate resources. (Stronger than manual)`,
+            cost: E(1e111),
+        },
+        qu_qol11: {
+            qf: true,
+            branch: ["unl3"],
+            unl() { return hasElement(118) },
+            desc: `Automatically gain Quantum times, gain 10x more Quantum times and passive Quantum Foams.`,
+            cost: E(1e118),
+        },
+        qu_qol12: {
+            qf: true,
+            branch: ["unl4"],
+            unl() { return hasElement(118) },
+            desc: `You can gain Death Shards outside Big Rips. Plutonium-94 don't work outside Big Rips.`,
+            cost: E(5e130),
+        },
+        qu_qol13: {
+            qf: true,
+            branch: ["qu_qol12"],
+            unl() { return hasElement(118) },
+            desc: `You can gain Relativistic Energy outside Big Rips. Autobuy Break Dilation Upgrades.`,
+            cost: E(5e137),
+        },
         prim1: {
             qf: true,
             branch: ["qu5"],
@@ -807,6 +874,20 @@ const TREE_UPGS = {
             branch: ["prim2"],
             desc: `Epsilon Particle’s second effect is now added, stronger if you are in Quantum Challenge.`,
             cost: E(1e16),
+        },
+        prim4: {
+            qf: true,
+            unl() { return player.atom.elements.includes(118) },
+            branch: ["prim3"],
+            desc: `You can't gain Delta Particles from Primordium Theorem now. Instead, Add Free Delta Particles equals to your total Primordium Theorems.`,
+            cost: E(1e105),
+        },
+        prim5: {
+            qf: true,
+            unl() { return player.atom.elements.includes(118) },
+            branch: ["prim4"],
+            desc: `You can't gain Omega Particles from Primordium Theorem now. Instead, Add Free Omega Particles equals to your total Primordium Theorems.`,
+            cost: E(1e116),
         },
         qc1: {
             qf: true,
@@ -843,12 +924,48 @@ const TREE_UPGS = {
             },
             effDesc(x) { return "+"+format(x) },
         },
+        qc4: {
+            unl() { return player.atom.elements.includes(118) },
+            qf: true,
+            branch: ['qc3'],
+            desc: `Increase maximum QC nerf tier based on your Quantum Shards.`,
+            cost: E(1e104),
+            effect() {
+                let x = Math.floor((player.qu.qc.shard-80)/8);
+                return x
+            },
+            effDesc(x) { return "+"+format(x,0) },
+        },
+        qc5: {
+            unl() { return player.atom.elements.includes(118) },
+            qf: true,
+            branch: ['qc4'],
+            desc: `Pre-Quantum Global Speed is boosted by your Quantum Shards.`,
+            cost: E(1e135),
+            effect() {
+                let x = Decimal.pow(1.07,player.qu.qc.shard);
+                return x
+            },
+            effDesc(x) { return format(x,0)+"x" },
+        },
         en1: {
             unl() { return player.qu.rip.first },
             qf: true,
             branch: ['qu5'],
             desc: `Evaporating frequency & mass of black hole is twice effective, its effects are stronger.`,
             cost: E(1e55),
+        },
+        en2: {
+            unl() { return player.atom.elements.includes(118) },
+            qf: true,
+            branch: ['en1'],
+            desc: `Quantum Shard boost Entropy gain.`,
+            cost: E(1e119),
+            effect() {
+                let x = (player.qu.qc.shard**2/100+1)
+                return x
+            },
+            effDesc(x) { return "x"+format(x) },
         },
         br1: {
             unl() { return player.qu.rip.first },
@@ -863,6 +980,13 @@ const TREE_UPGS = {
                 return x
             },
             effDesc(x) { return "x"+format(x) },
+        },
+        br2: {
+            unl() { return hasElement(118) },
+            qf: true,
+            branch: ['br1'],
+            desc: `All elements can be bought in Big Rip.`,
+            cost: E(1e114),
         },
 
         // Other

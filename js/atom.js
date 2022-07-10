@@ -18,6 +18,7 @@ const ATOM = {
         if (tmp.atom.gain.lt(1)) return E(0)
         x = tmp.atom.gain.max(1).log10().pow(1.1).add(1)
         if (hasElement(1)) x = E(1.25).pow(tmp.atom.gain.max(1).log10())
+        if (hasElement(1) && player.ranks.hex.gte(1)) x = E(1.5).pow(tmp.atom.gain.max(1).log10())
         if (player.mainUpg.bh.includes(13)) x = x.mul(10)
         if (player.mainUpg.atom.includes(8)) x = x.mul(tmp.upgs.main?tmp.upgs.main[3][8].effect:E(1))
         if (player.ranks.rank.gte(300)) x = x.mul(RANKS.effect.rank[300]())
@@ -63,8 +64,8 @@ const ATOM = {
         },
         effect() {
             let x = player.atom.atomic.max(1).log(hasElement(23)?1.5:1.75).pow(getEnRewardEff(1))
-            if (!hasElement(75)) x = x.softcap(5e4,0.75,0).softcap(4e6,0.25,0)
-            x = x.softcap(hasUpgrade("atom",13)?1e11:1e10,0.1,0)
+            if (!hasElement(75)) x = x.softcap((player.prestiges[0].gte(50) && hasUpgrade("atom",13))?6e5:5e4,0.75,0).softcap((player.prestiges[0].gte(50) && hasUpgrade("atom",13))?4.8e7:4e6,0.25,0)
+            x = x.softcap(hasUpgrade("atom",13)?(player.prestiges[0].gte(50)?1.2e11:1e11):1e10,0.1,0)
             return x.floor()
         },
     },

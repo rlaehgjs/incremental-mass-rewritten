@@ -25,7 +25,7 @@ const FERMIONS = {
     },
     bonus(i,j) {
         let x = E(0)
-        if (hasTree("prim3")) x = x.add(tmp.prim.eff[5][1].min(j>2?4:1/0))
+        if (hasTree("prim3")) x = x.add(tmp.prim.eff[5][1].min(j>(hasTree('fn15')?5:hasTree('fn14')?4:2)?4:1/0))
         return x
     },
     fp() {
@@ -112,7 +112,7 @@ const FERMIONS = {
                     return x
                 },
                 desc(x) {
-                    return `Z<sup>0</sup> Boson's first effect is ${format(x.sub(1).mul(100))}% stronger`+(x.gte(5)?" <span class='soft'>(softcapped)</span>":"")
+                    return `Z<sup>0</sup> Boson's first effect is ${format(x.sub(1).mul(100))}% stronger`+(x.gte(449)?" <span class='soft'>(softcapped^2)</span>":x.gte(5)?" <span class='soft'>(softcapped)</span>":"")
                 },
                 inc: "Mass",
                 cons: "You are trapped in Mass Dilation, but they are twice effective",
@@ -122,6 +122,7 @@ const FERMIONS = {
                     let x = 15
                     if (hasTree("fn9")) x += 2
                     if (hasTree("fn11")) x += 5
+                    if (hasTree("fn14")) x += 69
                     return x
                 },
                 nextTierAt(x) {
@@ -139,7 +140,7 @@ const FERMIONS = {
                     return x
                 },
                 desc(x) {
-                    return `4th Photon & Gluon upgrades are ${format(x)}x stronger`+(x.gte(1.5)?" <span class='soft'>(softcapped)</span>":"")
+                    return `4th Photon & Gluon upgrades are ${format(x)}x stronger`+(x.gte(6.5)?" <span class='soft'>(hardcapped)</span>":x.gte(5)?" <span class='soft'>(softcapped^2)</span>":x.gte(1.5)?" <span class='soft'>(softcapped)</span>":"")
                 },
                 inc: "Rage Power",
                 cons: "You are trapped in Mass Dilation and Challenges 3-5",
@@ -147,6 +148,7 @@ const FERMIONS = {
                 maxTier() {
                     let x = 30
                     if (hasTree("fn11")) x += 5
+                    if (hasTree("fn14")) x += 69
                     return x
                 },
                 nextTierAt(x) {
@@ -164,7 +166,7 @@ const FERMIONS = {
                     return x.softcap(1.15,0.5,0).softcap(1.8,1/3,0).min(2)
                 },
                 desc(x) {
-                    return `Radiation Boosters are ${format(x)}x cheaper`+(x.gte(1.15)?" <span class='soft'>(softcapped)</span>":"")
+                    return `Radiation Boosters are ${format(x)}x cheaper`+(x.gte(2)?" <span class='soft'>(hardcapped)</span>":x.gte(1.8)?" <span class='soft'>(softcapped^2)</span>":x.gte(1.15)?" <span class='soft'>(softcapped)</span>":"")
                 },
                 inc: "Dilated Mass",
                 cons: "U-Quarks, Photons & Gluons do nothing",
@@ -190,7 +192,7 @@ const FERMIONS = {
                     return x.min(500)
                 },
                 desc(x) {
-                    return `Meta-Tickspeed starts ${format(x)}x later`
+                    return `Meta-Tickspeed starts ${format(x)}x later`+(x.gte(500)?" <span class='soft'>(hardcapped)</span>":"")
                 },
                 inc: "Tickspeed Effect",
                 cons: "Challenges are disabled",
@@ -270,6 +272,7 @@ const FERMIONS = {
                     let x = 15
                     if (hasTree("fn9")) x += 2
                     if (hasTree("fn11")) x += 5
+                    if (hasTree("fn14")) x += 69
                     return x
                 },
                 nextTierAt(x) {
@@ -295,6 +298,7 @@ const FERMIONS = {
                 maxTier() {
                     let x = 25
                     if (hasTree("fn11")) x += 5
+                    if (hasTree("fn14")) x += 69
                     return x
                 },
                 nextTierAt(x) {
@@ -308,11 +312,11 @@ const FERMIONS = {
                     return FERMIONS.getTierScaling(x, true)
                 },
                 eff(i, t) {
-                    let x = E(0.95).pow(i.add(1).log10().mul(t).root(4).softcap(27,0.5,0)).max(2/3).toNumber()
+                    let x = E(0.95).pow(i.add(1).log10().mul(t).root(4).softcap(27,0.5,0)).max(hasTree('fn13')?0:2/3).toNumber()
                     return x
                 },
                 desc(x) {
-                    return `Pre-Meta-Supernova Scalings are ${format(100-x*100)}% weaker`
+                    return `Pre-Meta-Supernova Scalings are ${format(100-x*100)}% weaker`+((x<=2/3 && !hasTree('fn13'))?" <span class='soft'>(hardcapped)</span>":"")
                 },
                 inc: "Atom",
                 cons: "U-Leptons, Z<sup>0</sup> bosons do nothing",

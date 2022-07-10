@@ -182,7 +182,7 @@ const MASS_DILATION = {
             } else bd.active = true
         },
         energyGain() {
-            if (!player.md.break.active || !player.qu.rip.active) return E(0)
+            if (!player.md.break.active || !(player.qu.rip.active || hasTree('qu_qol13'))) return E(0)
 
             let x = player.md.mass.add(1).log10().sub(400).div(2).max(0)
             x = x.add(1).pow(x.add(1).log10()).sub(1)

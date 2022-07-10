@@ -451,8 +451,17 @@ const UPGS = {
             res: "Atom",
             getRes() { return player.atom.points },
             unl() { return player.atom.unl },
-            can(x) { return player.atom.points.gte(this[x].cost) && !player.mainUpg.atom.includes(x) },
+            can(x) { 
+				if (x >= 13 && player.prestiges[0].gte(50))return player.atom.points.gte(this[x].cost.pow(1/20000)) && !player.mainUpg.atom.includes(x);
+				return player.atom.points.gte(this[x].cost) && !player.mainUpg.atom.includes(x) 
+			},
             buy(x) {
+				if (x >= 13 && player.prestiges[0].gte(50)){
+					if (this.can(x)) {
+						player.atom.points = player.atom.points.sub(this[x].cost.pow(1/20000))
+						player.mainUpg.atom.push(x)
+					}
+				}
                 if (this.can(x)) {
                     player.atom.points = player.atom.points.sub(this[x].cost)
                     player.mainUpg.atom.push(x)
@@ -553,18 +562,18 @@ const UPGS = {
                 cost: E('e2015'),
             },
             13: {
-                unl() { return player.md.break.active && player.qu.rip.active },
-                desc: "Cosmic Ray effect softcap starts x10 later.",
+                unl() { return player.md.break.active && (player.qu.rip.active || player.prestiges[0].gte(50)) },
+                desc() {if(player.prestiges[0].gte(50))return "Cosmic Ray effect's all softcaps starts x12 later."; return "Cosmic Ray effect's final softcap starts x10 later.";},
                 cost: E('e3.2e11'),
             },
             14: {
-                unl() { return player.md.break.active && player.qu.rip.active },
-                desc: "Tickspeed, Black Hole Condenser and Cosmic Ray scalings up to Meta start x10 later.",
+                unl() { return player.md.break.active && (player.qu.rip.active || player.prestiges[0].gte(50)) },
+                desc() {if(player.prestiges[0].gte(50))return "Tickspeed, Black Hole Condenser and Cosmic Ray scalings up to Meta start x12 later."; return "Tickspeed, Black Hole Condenser and Cosmic Ray scalings up to Meta start x10 later.";},
                 cost: E('e4.3e13'),
             },
             15: {
-                unl() { return player.md.break.active && player.qu.rip.active },
-                desc: "Reduce Cosmic Ray scaling by 20%.",
+                unl() { return player.md.break.active && (player.qu.rip.active || player.prestiges[0].gte(50)) },
+                desc() {if(player.prestiges[0].gte(50))return "Reduce Cosmic Ray scaling by 24%."; return "Reduce Cosmic Ray scaling by 20%.";},
                 cost: E('e3.4e14'),
             },
         },

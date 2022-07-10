@@ -72,7 +72,16 @@ const PRIM = {
 
 function giveRandomPParticles(v, max=false) {
     if (!PRIM.unl()) return
-
+	if (hasTree('prim4') && PRIM.particle.weight[0]){
+		PRIM.particle.weight[0]=0;
+		PRIM.particle.total_w-=6;
+		calcPartChances();
+	}
+	if (hasTree('prim5') && PRIM.particle.weight[2]){
+		PRIM.particle.weight[2]=0;
+		PRIM.particle.total_w-=6;
+		calcPartChances();
+	}
     let s = max?tmp.prim.unspent:E(v)
     if (!max) s = s.min(tmp.prim.unspent)
 
@@ -109,6 +118,14 @@ function calcPartChances() {
 
 calcPartChances()
 
+function freePrimordiumParticles(id) {
+	let res = E(0)
+	if (hasTree('prim4') && id == 0) res = player.qu.prim.theorems,player.qu.prim.particles[0] = E(0)
+	if (hasTree('prim5') && id == 2) res = player.qu.prim.theorems,player.qu.prim.particles[2] = E(0)
+	if (hasPrestige(1,4)) res = res.add(5)
+	if (hasPrestige(1,9)) res = res.add(player.prestiges[1].max(1))
+	return res
+}
 function updatePrimordiumTemp() {
     tmp.prim.t_base = E(5)
     if (hasTree('prim1')) tmp.prim.t_base = tmp.prim.t_base.sub(1)
@@ -117,7 +134,7 @@ function updatePrimordiumTemp() {
     tmp.prim.unspent = player.qu.prim.theorems.sub(PRIM.spentTheorems()).max(0)
     for (let i = 0; i < player.qu.prim.particles.length; i++) {
         let pp = player.qu.prim.particles[i]
-        if (hasPrestige(1,4)) pp = pp.add(5)
+		pp = pp.add(freePrimordiumParticles(i))
         if (player.qu.rip.active) pp = pp.mul(i==5?hasElement(95)?0.1:0:1/2)
         tmp.prim.eff[i] = PRIM.particle.eff[i](pp.softcap(100,0.75,0))
     }
@@ -127,7 +144,7 @@ function updatePrimordiumHTML() {
     tmp.el.prim_theorem.setTxt(format(tmp.prim.unspent,0)+" / "+format(player.qu.prim.theorems,0))
     tmp.el.prim_next_theorem.setTxt(format(player.qu.bp,1)+" / "+format(tmp.prim.next_theorem,1))
     for (let i = 0; i < player.qu.prim.particles.length; i++) {
-        tmp.el["prim_part"+i].setTxt(format(player.qu.prim.particles[i],0))
+        tmp.el["prim_part"+i].setTxt(format(player.qu.prim.particles[i],0)+" + "+format(freePrimordiumParticles(i),0))
         tmp.el["prim_part_eff"+i].setHTML(PRIM.particle.effDesc[i](tmp.prim.eff[i]))
     }
 }

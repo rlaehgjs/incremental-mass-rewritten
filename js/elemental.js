@@ -34,12 +34,8 @@ const ELEMENTS = {
     canBuy(x) { return player.atom.quarks.gte(this.upgs[x].cost) && !hasElement(x) && (player.qu.rip.active ? true : x <= 86) && !tmp.elements.cannot.includes(x) },
     buyUpg(x) {
         if (this.canBuy(x)) {
-            if (x == 118) {
-                alert("Coming Soon.....")
-            } else {
-                player.atom.quarks = player.atom.quarks.sub(this.upgs[x].cost)
-                player.atom.elements.push(x)
-            }
+            player.atom.quarks = player.atom.quarks.sub(this.upgs[x].cost)
+            player.atom.elements.push(x)
         }
     },
     upgs: [
@@ -57,6 +53,7 @@ const ELEMENTS = {
             cost: E(1e15),
             effect() {
                 let x = player.atom?player.atom.powers[2].add(1).root(2):E(1)
+				if(player.ranks.hex.gte(3))x=x.pow(1.5);
                 if (x.gte('e1e4')) x = expMult(x.div('e1e4'),0.9).mul('e1e4')
                 return x
             },
@@ -708,7 +705,7 @@ const ELEMENTS = {
             cost: E("e5e16"),
         },
         {
-            desc: `Enter the <span id="final_118">Portal</span>.`,
+            desc: `Unlock more Neutron Tree Upgrades. <span id="final_118" style="display:none;"></span>`,
             cost: E("e1.7e17"),
         },
     ],
@@ -788,7 +785,7 @@ function updateElementsHTML() {
         if (upg) {
             upg.setVisible(x <= tmp.elements.unl_length)
             if (x <= tmp.elements.unl_length) {
-                upg.setClasses({elements: true, locked: !ELEMENTS.canBuy(x), bought: hasElement(x), br: x > 86 && x < 118, final: x == 118})
+                upg.setClasses({elements: true, locked: !ELEMENTS.canBuy(x), bought: hasElement(x), br: x > 86 && x <= 118})
             }
         }
     }
@@ -796,7 +793,7 @@ function updateElementsHTML() {
 
 function updateElementsTemp() {
     let cannot = []
-    if (player.qu.rip.active) cannot.push(58,74)
+    if (player.qu.rip.active && !hasTree('br2')) cannot.push(58,74)
     tmp.elements.cannot = cannot
 
     if (!tmp.elements.upg_length) tmp.elements.upg_length = ELEMENTS.upgs.length-1

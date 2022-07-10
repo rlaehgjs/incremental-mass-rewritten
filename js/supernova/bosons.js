@@ -15,7 +15,7 @@ const BOSONS = {
         },
         z_boson() {
             let x = E(0.01).mul(tmp.bosons.effect.graviton?tmp.bosons.effect.graviton[0]:1)
-            if (hasTree("sn4")) x = x.pow(1.5)
+            if (hasTree("bs4")) x = x.pow(1.5)
             if (QCs.active()) x = x.pow(tmp.qu.qc_eff[3])
             if (hasPrestige(1,3)) x = x.pow(prestigeEff(1,3))
             return x

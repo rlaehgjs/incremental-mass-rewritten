@@ -1,6 +1,6 @@
 const RANKS = {
-    names: ['rank', 'tier', 'tetr', 'pent'],
-    fullNames: ['Rank', 'Tier', 'Tetr', 'Pent'],
+    names: ['rank', 'tier', 'tetr', 'pent', 'hex'],
+    fullNames: ['Rank', 'Tier', 'Tetr', 'Pent', 'Hex'],
     reset(type) {
         if (tmp.ranks[type].can) {
             player.ranks[type] = player.ranks[type].add(1)
@@ -29,6 +29,7 @@ const RANKS = {
         tier() { return player.ranks.rank.gte(3) || player.ranks.tier.gte(1) || player.mainUpg.atom.includes(3) || tmp.radiation.unl },
         tetr() { return player.mainUpg.atom.includes(3) || tmp.radiation.unl },
         pent() { return tmp.radiation.unl },
+        hex() { return player.prestiges[0].gte(42) },
     },
     doReset: {
         rank() {
@@ -47,6 +48,10 @@ const RANKS = {
             player.ranks.tetr = E(0)
             this.tetr()
         },
+        hex() {
+            player.ranks.pent = E(0)
+            this.pent()
+        },
     },
     autoSwitch(rn) { player.auto_ranks[rn] = !player.auto_ranks[rn] },
     autoUnl: {
@@ -54,6 +59,7 @@ const RANKS = {
         tier() { return player.mainUpg.rp.includes(6) },
         tetr() { return player.mainUpg.atom.includes(5) },
         pent() { return hasTree("qol8") },
+        hex() { return true; },
     },
     desc: {
         rank: {
@@ -103,6 +109,11 @@ const RANKS = {
             '5': "Meta-Ranks start later based on Pent.",
             '8': "Mass gain softcap^4 starts later based on Pent.",
             '15': "remove 3rd softcap of Stronger's effect.",
+        },
+        hex: {
+            '1': "remove mass gain softcap^1, Hydrogen-1 is better.",
+            '2': "Hardened Challenge scale 25% weaker.",
+            '3': "Lithium-3's Effect is powered by 1.5 before softcaps.",
         },
     },
     effect: {
@@ -196,6 +207,8 @@ const RANKS = {
                 return ret
             },
         },
+        hex: {
+        },
     },
     effDesc: {
         rank: {
@@ -224,6 +237,8 @@ const RANKS = {
             4(x) { return format(x)+"x later" },
             5(x) { return format(x)+"x later" },
             8(x) { return "^"+format(x)+" later" },
+        },
+        hex: {
         },
     },
     fp: {
@@ -316,6 +331,13 @@ const PRESTIGES = {
             "28": `Remove all softcaps from Gluon Upgrade 4's effect.`,
             "32": `Prestige Base’s exponent is increased based on Prestige Level.`,
             "40": `Chromium-24 is slightly stronger.`,
+            "42": `Unlock Hex.`,
+            "45": `Ultra Tetr scale 42% weaker.`,
+            "50": `The final 3 Atom upgrades can be bought outside Big Rips, are stronger, and costs are raised by 1/20000.`,
+            "51": `Mass gain softcap^2 is 50% weaker.`,
+            "53": `Meta-Rank starts 1.5x later.`,
+            "55": `Multiply Quantum Foam and Death Shard gain by your Prestige Level.`,
+            "58": `All rank scaling are 50% weaker.`,
         },
         {
             "1": `All-Star resources are raised by ^2.`,
@@ -324,6 +346,8 @@ const PRESTIGES = {
             "4": `Gain 5 free levels of each Primordium Particle.`,
             "5": `Pent 5's reward is stronger based on Prestige Base.`,
             "7": `Quarks are boosted based on Honor.`,
+            "9": `Gain free levels of each Primordium Particle equals to your Honor.`,
+            "10": `Reach the current endgame.`,
         },
     ],
     rewardEff: [
@@ -340,6 +364,10 @@ const PRESTIGES = {
                 let x = player.prestiges[0].div(1e4).toNumber()
                 return x
             },x=>"+^"+format(x)],
+            "55": [_=>{
+                let x = player.prestiges[0].max(1)
+                return x
+            },x=>x.format()+"x"],
             /*
             "1": [_=>{
                 let x = E(1)
@@ -362,6 +390,10 @@ const PRESTIGES = {
                 let x = player.prestiges[1].add(1).root(3)
                 return x
             },x=>"^"+x.format()],
+            "9": [_=>{
+                let x = player.prestiges[1].max(1)
+                return x
+            },x=>"+"+x.format()],
         },
     ],
     reset(i) {
@@ -413,6 +445,11 @@ function updateRanksTemp() {
     pow = 1.5
     tmp.ranks.pent.req = player.ranks.pent.scaleEvery('pent').div(fp).pow(pow).add(15).floor()
     tmp.ranks.pent.bulk = player.ranks.tetr.sub(15).gte(0)?player.ranks.tetr.sub(15).max(0).root(pow).mul(fp).scaleEvery('pent',true).add(1).floor():E(0);
+
+    fp = E(1)
+    pow = 1.5
+    tmp.ranks.hex.req = player.ranks.hex.scaleEvery('hex').div(fp).pow(pow).add(25).floor()
+    tmp.ranks.hex.bulk = player.ranks.pent.sub(25).gte(0)?player.ranks.pent.sub(25).max(0).root(pow).mul(fp).scaleEvery('hex',true).add(1).floor():E(0);
 
     for (let x = 0; x < RANKS.names.length; x++) {
         let rn = RANKS.names[x]

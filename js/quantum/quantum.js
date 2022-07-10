@@ -10,12 +10,14 @@ const QUANTUM = {
         if (hasTree("qf2")) x = x.mul(treeEff("qf2"))
         if (hasTree("qf3")) x = x.mul(treeEff("qf3"))
         if (hasPrestige(0,2)) x = x.mul(4)
+        if (hasPrestige(0,55)) x = x.mul(player.prestiges[0].max(1))
         return x.floor()
     },
     gainTimes() {
         let x = E(1)
         if (hasTree("qu7")) x = x.mul(treeEff("qu7"))
         if (hasTree("qu9")) x = x.mul(treeEff("qu9"))
+        if (hasTree("qu_qol11")) x = x.mul(10)
         return x
     },
     enter(auto=false,force=false,rip=false,bd=false) {
@@ -236,8 +238,12 @@ function calcQuantum(dt, dt_offline) {
         }
 
         if (hasUpgrade('br',8)) {
-            player.qu.points = player.qu.points.add(tmp.qu.gain.mul(dt/10))
-            if (player.qu.rip.active) player.qu.rip.amt = player.qu.rip.amt.add(tmp.rip.gain.mul(dt/10))
+            player.qu.points = player.qu.points.add(tmp.qu.gain.mul(dt/(hasTree('qu_qol11')?1:10)))
+            if (player.qu.rip.active || hasTree('qu_qol12')) player.qu.rip.amt = player.qu.rip.amt.add(tmp.rip.gain.mul(dt/10))
+        }
+
+        if (hasTree('qu_qol11')) {
+            player.qu.times = player.qu.times.add(tmp.qu.gainTimes.mul(dt))
         }
     }
 
@@ -288,7 +294,7 @@ function updateQuantumHTML() {
 
     let unl = quUnl() || player.chal.comps[12].gte(1)
     tmp.el.qu_div.setDisplay(unl)
-    if (unl) tmp.el.quAmt.setHTML(format(player.qu.points,0)+"<br>"+(gain2?player.qu.points.formatGain(tmp.qu.gain.div(10)):"(+"+format(tmp.qu.gain,0)+")"))
+    if (unl) tmp.el.quAmt.setHTML(format(player.qu.points,0)+"<br>"+(gain2?player.qu.points.formatGain(tmp.qu.gain.div(hasTree('qu_qol11')?1:10)):"(+"+format(tmp.qu.gain,0)+")"))
 
     unl = quUnl()
     tmp.el.gs1_div.setDisplay(unl)
@@ -296,7 +302,7 @@ function updateQuantumHTML() {
 
     unl = hasTree("unl4")
     tmp.el.br_div.setDisplay(unl)
-    if (unl) tmp.el.brAmt.setHTML(player.qu.rip.amt.format(0)+"<br>"+(player.qu.rip.active?gain2?player.qu.rip.amt.formatGain(tmp.rip.gain.div(10)):`(+${tmp.rip.gain.format(0)})`:"(inactive)"))
+    if (unl) tmp.el.brAmt.setHTML(player.qu.rip.amt.format(0)+"<br>"+((player.qu.rip.active || (hasTree('qu_qol12') && gain2))?gain2?player.qu.rip.amt.formatGain(tmp.rip.gain.div(10)):`(+${tmp.rip.gain.format(0)})`:"(inactive)"))
 
     if (tmp.tab == 0 && tmp.stab[0] == 4) {
         tmp.el.bpAmt.setTxt(format(player.qu.bp,1)+" "+formatGain(player.qu.bp,tmp.qu.bpGain))
@@ -315,6 +321,10 @@ function updateQuantumHTML() {
         if (tmp.stab[6] == 1) {
             tmp.el.qu_times.setTxt(format(player.qu.times,0))
 
+			if(hasTree('qu_qol11')){
+				tmp.el.qu_times.setTxt(format(player.qu.times,0)+player.qu.times.formatGain(tmp.qu.gainTimes))
+			}
+			
             for (let x = 0; x < QUANTUM.mils.length; x++) {
                 tmp.el['qu_mil'+x].changeStyle('background-color',tmp.qu.mil_reached[x]?'#2f22':'#4442')
                 tmp.el['qu_mil_goal'+x].setTxt(format(QUANTUM.mils[x][0],0))

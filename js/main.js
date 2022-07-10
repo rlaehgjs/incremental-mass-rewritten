@@ -22,11 +22,13 @@ const FORMS = {
         if (tmp.qu.mil_reached[1]) x = x.mul(10)
         if (quUnl()) x = x.mul(tmp.qu.bpEff)
         if (hasElement(103)) x = x.mul(tmp.elements.effect[103])
+		if(hasTree('qc5')) x = x.mul(treeEff('qc5'));
 
         if (player.mainUpg.br.includes(3)) x = x.pow(tmp.upgs.main[4][3].effect)
         if (hasPrestige(0,5)) x = x.pow(2)
 
         if (QCs.active()) x = x.div(tmp.qu.qc_eff[1])
+		
         return x
     },
     massGain() {
@@ -77,6 +79,7 @@ const FORMS = {
         return s.min(tmp.massSoftGain2||1/0)
     },
     massSoftPower() {
+        if (player.ranks.hex.gte(1)) return E(1)
         let p = E(1/3)
         if (CHALS.inChal(3) || CHALS.inChal(10) || FERMIONS.onActive("03")) p = p.mul(4)
         if (CHALS.inChal(7) || CHALS.inChal(10)) p = p.mul(6)
@@ -98,6 +101,7 @@ const FORMS = {
     massSoftPower2() {
         let p = E(player.qu.rip.active ? 0.1 : 0.25)
         if (hasElement(51)) p = p.pow(0.9)
+        if (player.prestiges[0].gte(51)) p = p.pow(0.5)
         return p
     },
     massSoftGain3() {
@@ -448,18 +452,31 @@ function format(ex, acc=4, max=12, type=player.options.notation) {
 }
 
 function turnOffline() { player.offline.active = !player.offline.active }
+function turnMassDisplay() { player.mass_display = ((player.mass_display || 0) + 1) % 4 }
 
 const ARV = ['mlt','mgv','giv','tev','pev','exv','zev','yov']
 
+function getMltValue(mass){
+	mass = E(mass);
+	if(mass.lte(1e50)){
+		return mass.div(1.5e56).mul(Decimal.log10(Decimal.exp(1))).div(1e9);
+	}else{
+		return mass.div(1.5e56).add(1).log10().div(1e9);
+	}
+}
 function formatARV(ex,gain=false) {
-    if (gain) ex = uni("ee9").pow(ex)
-    let mlt = ex.div(1.5e56).log10().div(1e9)
+    let mlt = getMltValue(ex);
+    if (gain) mlt = ex
     let arv = mlt.log10().div(15).floor()
+	if (player.mass_display == 3)arv = E(0)
     return format(mlt.div(Decimal.pow(1e15,arv))) + " " + (arv.gte(8)?"arv^"+format(arv.add(2),0):ARV[arv.toNumber()])
 }
 
 function formatMass(ex) {
     ex = E(ex)
+	if (player.mass_display == 1)return format(ex) + ' g'
+	if (player.mass_display == 2)return format(ex.div(1.5e56)) + ' uni'
+	if (player.mass_display == 3)return formatARV(ex)
     if (ex.gte(E(1.5e56).mul('ee9'))) return formatARV(ex)
     if (ex.gte(1.5e56)) return format(ex.div(1.5e56)) + ' uni'
     if (ex.gte(2.9835e45)) return format(ex.div(2.9835e45)) + ' MMWG'
@@ -468,7 +485,11 @@ function formatMass(ex) {
     if (ex.gte(1.619e20)) return format(ex.div(1.619e20)) + ' MME'
     if (ex.gte(1e6)) return format(ex.div(1e6)) + ' tonne'
     if (ex.gte(1e3)) return format(ex.div(1e3)) + ' kg'
-    return format(ex) + ' g'
+    if (ex.gte(1)) return format(ex) + ' g'
+    if (ex.gte(1e-3)) return format(ex.div(1e-3)) + ' mg'
+    if (ex.gte(1e-6)) return format(ex.div(1e-6)) + ' μg'
+    if (ex.gte(1e-9)) return format(ex.div(1e-9)) + ' ng'
+    return format(ex.div(1.66053886e-24)) + ' u'
 }
 
 function formatGain(amt, gain, isMass=false) {
@@ -481,9 +502,13 @@ function formatGain(amt, gain, isMass=false) {
         rate = "(+"+format(ooms) + " OoMs^2/sec)"
     }
     ooms = next.div(amt)
-    if (ooms.gte(10) && amt.gte(1e100)) {
+    if ((ooms.gte(10) && amt.gte(1e100)) || (isMass && player.mass_display == 3)) {
         ooms = ooms.log10().mul(20)
-        if (isMass && amt.gte(mlt(1)) && ooms.gte(1e6)) rate = "(+"+formatARV(ooms.div(1e9),true) + "/sec)"
+        if (isMass && ((amt.gte(mlt(1)) && ooms.gte(1e6)) || player.mass_display == 3) && player.mass_display != 1 && player.mass_display != 2){
+			let mlt_amt = getMltValue(amt)
+			let mlt_next = getMltValue(amt.add(gain.div(20)))
+			rate = "(+"+formatARV(mlt_next.sub(mlt_amt).mul(20),true) + "/sec)"
+		}
         else rate = "(+"+format(ooms) + " OoMs/sec)"
     }
     else rate = "(+"+f(gain)+"/sec)"

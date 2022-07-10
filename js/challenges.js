@@ -125,6 +125,12 @@ const CHALS = {
         if (hasTree("chal4b") && (i==9))  x = x.add(100)
         if (hasTree("chal8") && (i>=9))  x = x.add(200)
         if (hasElement(104) && (i>=9))  x = x.add(200)
+        if (hasTree("chal9") && (i==9))  x = x.add(2000)
+        if (hasTree("chal10") && (i==10))  x = x.add(500)
+        if (hasTree("chal10") && (i==11))  x = x.add(500)
+        if (hasTree("chal11") && (i==9))  x = x.add(500)
+        if (hasTree("chal11") && (i==10))  x = x.add(500)
+        if (hasTree("chal11") && (i==11))  x = x.add(500)
         return x.floor()
     },
     getScaleName(i) {
@@ -137,6 +143,7 @@ const CHALS = {
         let x = E(1)
         if (hasElement(2)) x = x.mul(0.75)
         if (hasElement(26)) x = x.mul(tmp.elements.effect[26])
+		if (player.ranks.hex.gte(2)) x = x.mul(0.75)
         return x
     },
     getPower2(i) {
@@ -264,7 +271,7 @@ const CHALS = {
             let ret = x.mul(0.075).add(1).softcap(1.3,sp,0).sub(1)
             return ret
         },
-        effDesc(x) { return "+"+format(x.mul(100))+"%"+(x.gte(0.3)?" <span class='soft'>(softcapped)</span>":"") },
+        effDesc(x) { return "+"+format(x.mul(100))+"%"+((x.gte(0.3)&&!hasElement(39))?" <span class='soft'>(softcapped)</span>":"") },
     },
     3: {
         unl() { return player.chal.comps[2].gte(1) || player.atom.unl },
@@ -326,7 +333,7 @@ const CHALS = {
             let ret = x.mul(0.1).add(1).softcap(1.5,hasElement(39)?1:0.5,0).sub(1)
             return ret
         },
-        effDesc(x) { return "+"+format(x)+"x"+(x.gte(0.5)?" <span class='soft'>(softcapped)</span>":"") },
+        effDesc(x) { return "+"+format(x)+"x"+((x.gte(0.5)&&!hasElement(39))?" <span class='soft'>(softcapped)</span>":"") },
     },
     7: {
         unl() { return player.chal.comps[6].gte(1) || player.supernova.times.gte(1) || quUnl() },

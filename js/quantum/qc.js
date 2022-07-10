@@ -1,7 +1,7 @@
 const QCs = {
     active() { return player.qu.qc.active || player.qu.rip.active },
     getMod(x) { return player.qu.rip.active ? BIG_RIP_QC[x] : player.qu.qc.mods[x] },
-    incMod(x,i) { if (!this.active()) player.qu.qc.mods[x] = Math.min(Math.max(player.qu.qc.mods[x]+i,0),10) },
+    incMod(x,i) { if (!this.active()) player.qu.qc.mods[x] = Math.min(Math.max(player.qu.qc.mods[x]+i,0),hasTree('qc4')?Math.max(Math.floor(player.qu.qc.shard/8),10):10) },
     enter() {
         if (!player.qu.qc.active) {
             let is_zero = true
@@ -20,41 +20,55 @@ const QCs = {
     ctn: [
         {
             eff(i) {
+				if(i>=15)return [0,0]
+				if(i>=11)return [1-0.03*i,2/(i**3/100+2)]
                 return [1-0.03*i,2/(i+2)]
             },
             effDesc(x) { return `^${format(x[0])} to exponent from All-Stars resources.<br>^${format(x[1])} to strength of star generators.` },
         },{
             eff(i) {
+				if(i>=15)return E(2).pow(10**i)
+				if(i>=11)return E(2).pow(i**5/1000)
                 let x = E(2).pow(i**2)
                 return x
             },
             effDesc(x) { return `/${format(x,0)} to pre-Quantum global speed.` },
         },{
             eff(i) {
+				if(i>=15)return 10**i
+				if(i>=11)return i**3.5*0.0015+1
                 let x = i**1.5*0.15+1
                 return x
             },
             effDesc(x) { return `x${format(x)} to requirements of any Fermions.` },
         },{
             eff(i) {
+				if(i>=15)return 0
+				if(i>=11)return 0.9**(i**3.25/100)
                 let x = 0.9**(i**1.25)
                 return x
             },
             effDesc(x) { return `^${format(x)} to multiplier from Bosonic & Radiation resources.` },
         },{
             eff(i) {
+				if(i>=15)return 0
+				if(i>=11)return 0.8**(i**3.25/100)
                 let x = 0.8**(i**1.25)
                 return x
             },
             effDesc(x) { return `^${format(x)} to multiplier from pre-Supernova resources, except All-Stars resources.` },
         },{
             eff(i) {
+				if(i>=15)return 1e200
+				if(i>=11)return 1.2**(i**4/1000)
                 let x = 1.2**i
                 return x
             },
             effDesc(x) { return `x${format(x)} to requirements of any pre-Quantum Challenges.` },
         },{
             eff(i) {
+				if(i>=15)return 1e200
+				if(i>=11)return i**4.5/2000+1
                 let x = i**1.5/2+1
                 return x
             },
@@ -62,6 +76,8 @@ const QCs = {
         },{
             eff(i) {
                 if (hasElement(98) && player.qu.rip.active) i *= 0.8
+				if(i>=15)return [0,10**i]
+				if(i>=11)return [1-0.05*i,i**4/10000+1]
                 let x = [1-0.05*i,i/10+1]
                 return x
             },
@@ -126,7 +142,7 @@ function setupQCHTML() {
         table += `
         <div style="margin: 5px;">
         <div style="margin: 5px" tooltip="${QCs.names[x]}"><img onclick="tmp.qc_ch = ${x}" style="cursor: pointer" src="images/qcm${x}.png"></div>
-        <div><span id="qcm_mod${x}">0</span>/10</div>
+        <div><span id="qcm_mod${x}">0</span>/<span id="qcm_max${x}">10</span></div>
         <div id="qcm_btns${x}"><button onclick="QCs.incMod(${x},-1); tmp.qc_ch = ${x}">-</button><button onclick="QCs.incMod(${x},1); tmp.qc_ch = ${x}">+</button></div>
         </div>
         `
@@ -194,12 +210,13 @@ function updateQCHTML() {
         tmp.el.qc_btn.setTxt((QCs.active()?"Exit":"Enter") + " the Quantum Challenge")
         for (let x = 0; x < QCs_len; x++) {
             tmp.el["qcm_mod"+x].setTxt(QCs.getMod(x))
+            tmp.el["qcm_max"+x].setTxt(hasTree('qc4')?Math.max(Math.floor(player.qu.qc.shard/8),10):10)
             tmp.el["qcm_btns"+x].setDisplay(!QCs.active())
         }
         tmp.el.qc_desc_div.setDisplay(tmp.qc_ch >= 0)
         if (tmp.qc_ch >= 0) {
             let x = tmp.qc_ch
-            tmp.el.qc_ch_title.setTxt(`[${x+1}] ${QCs.names[x]} [${QCs.getMod(x)}/10]`)
+            tmp.el.qc_ch_title.setTxt(`[${x+1}] ${QCs.names[x]} [${QCs.getMod(x)}/${hasTree('qc4')?Math.max(Math.floor(player.qu.qc.shard/8),10):10}]`)
             tmp.el.qc_ch_desc.setHTML(QCs.ctn[x].effDesc(tmp.qu.qc_eff[x]))
         }
     }

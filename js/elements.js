@@ -301,7 +301,7 @@ function updateMainUpgradesHTML() {
 	if (player.main_upg_msg[0] != 0) {
 		let upg1 = UPGS.main[player.main_upg_msg[0]]
 		let upg2 = UPGS.main[player.main_upg_msg[0]][player.main_upg_msg[1]]
-		let msg = "<span class='sky'>"+(typeof upg2.desc == "function" ? upg2.desc() : upg2.desc)+"</span><br><span>Cost: "+format(upg2.cost,0)+" "+upg1.res+"</span>"
+		let msg = "<span class='sky'>"+(typeof upg2.desc == "function" ? upg2.desc() : upg2.desc)+"</span><br><span>Cost: "+format(upg2.cost.pow(player.main_upg_msg[1] >= 13 && player.prestiges[0].gte(50) && upg1.res == "Atom"?1/20000:1),0)+" "+upg1.res+"</span>"
 		if (upg2.effDesc !== undefined) msg += "<br><span class='green'>Currently: "+tmp.upgs.main[player.main_upg_msg[0]][player.main_upg_msg[1]].effDesc+"</span>"
 		tmp.el.main_upg_msg.setHTML(msg)
 	} else tmp.el.main_upg_msg.setTxt("")
@@ -360,6 +360,7 @@ function updateOptionsHTML() {
 	}
 	tmp.el.total_time.setTxt(formatTime(player.time))
 	tmp.el.offline_active.setTxt(player.offline.active?"ON":"OFF")
+	tmp.el.mass_display.setTxt(player.mass_display==1?"Always show g":player.mass_display==2?"Always show uni":player.mass_display==3?"Always show mlt":"Normal")
 	tmp.el.tree_anim_btn.setDisplay(player.supernova.times.gte(1) || quUnl())
 	tmp.el.tree_anim.setTxt(TREE_ANIM[player.options.tree_animation])
 
@@ -385,7 +386,7 @@ function updateHTML() {
 				updateMassUpgradesHTML()
 				updateTickspeedHTML()
 				
-				tmp.el.massSoft1.setDisplay(tmp.massGain.gte(tmp.massSoftGain))
+				tmp.el.massSoft1.setDisplay(tmp.massGain.gte(tmp.massSoftGain) && player.ranks.hex.eq(0))
 				tmp.el.massSoftStart1.setTxt(formatMass(tmp.massSoftGain))
 				tmp.el.massSoft3.setDisplay(tmp.massGain.gte(tmp.massSoftGain2))
 				tmp.el.massSoftStart3.setTxt(formatMass(tmp.massSoftGain2))

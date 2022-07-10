@@ -12,13 +12,14 @@ const BIG_RIP = {
     },
     gain() {
         let x = player.mass.add(1).log10().div(2e5).max(0)
-        if (!player.qu.rip.active || x.lt(1)) return E(0)
+        if (!(player.qu.rip.active || hasTree('qu_qol12')) || x.lt(1)) return E(0)
         if (hasTree('br1')) x = x.mul(treeEff('br1'))
         if (hasElement(90)) x = x.mul(tmp.elements.effect[90]||1)
-        if (hasElement(94)) x = x.mul(tmp.elements.effect[94]||1)
+        if (player.qu.rip.active && hasElement(94)) x = x.mul(tmp.elements.effect[94]||1)
         if (hasPrestige(0,2)) x = x.mul(4)
         if (player.md.break.upgs[6].gte(1)) x = x.mul(tmp.bd.upgs[6].eff?tmp.bd.upgs[6].eff[1]:1)
         if (hasUpgrade('br',13)) x = x.mul(upgEffect(4,13))
+        if (hasPrestige(0,55)) x = x.mul(player.prestiges[0].max(1))
         return x.floor()
     },
 }

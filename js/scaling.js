@@ -249,6 +249,7 @@ function getScalingStart(type, name) {
 			if (hasPrestige(1,5)) start = start.mul(prestigeEff(1,5))
 			start = start.mul(tmp.radiation.bs.eff[14])
 			start = start.mul(tmp.bd.upgs[4].eff)
+			if (hasPrestige(0,53)) start = start.mul(1.5)
 		}
 		if (name=="tickspeed") {
 			if (hasElement(68)) start = start.mul(2)
@@ -265,6 +266,7 @@ function getScalingStart(type, name) {
 		start = start.add(tmp.prim.eff[7])
 	}
 	if ((name=="bh_condenser" || name=="gamma_ray" || name=="tickspeed") && hasUpgrade('atom',14)) start = start.mul(10)
+	if ((name=="bh_condenser" || name=="gamma_ray" || name=="tickspeed") && hasUpgrade('atom',14) && player.prestiges[0].gte(50)) start = start.mul(1.2)
 	if (QCs.active() && QCM8_SCALES.includes(name)) if (!tmp.scaling_qc8.includes(name)) start = start.pow(tmp.qu.qc_eff[7][0])
 	if (hasUpgrade('br',14) && name=="fTier" && type=="super") start = start.add(10)
 	if (hasElement(88) && name == "tickspeed") start = start.mul(player.qu.rip.active?100:10)
@@ -343,6 +345,9 @@ function getScalingPower(type, name) {
 			if (hasElement(27)) power = power.mul(0.75)
 			if (hasElement(58)) power = power.mul(tmp.elements.effect[58])
 		}
+		if (name=="tetr") {
+			if (player.prestiges[0].gte(45)) power = power.mul(0.58)
+		}
 		if (name=='bh_condenser') {
 			if (hasElement(55)) power = power.mul(0.75)
 		}
@@ -355,9 +360,11 @@ function getScalingPower(type, name) {
 			if (hasElement(78)) power = power.mul(0.8)
 		}
 	}
+	if (name=="rank" && hasPrestige(0,58)) power = power.mul(0.5)
 	if (hasUpgrade("atom",15) && name == "gamma_ray") power = power.mul(0.8)
+	if (hasUpgrade("atom",15) && name == "gamma_ray" && player.prestiges[0].gte(50)) power = power.mul(0.76/0.8)
 	if (hasElement(108) && ["rank","tier","tetr","pent"].includes(name)) power = power.mul(player.qu.rip.active?0.98:0.9)
 	if (QCs.active() && QCM8_SCALES.includes(name)) if (!tmp.scaling_qc8.includes(name)) power = power.mul(tmp.qu.qc_eff[7][1])
 	if (PreQ_SCALES.includes(name) && type != "meta")  power = power.mul(getEnRewardEff(5))
-	return power.max(type=="meta"?0.5:0)
+	return power.max(type=="meta"?0.1:0)
 }
