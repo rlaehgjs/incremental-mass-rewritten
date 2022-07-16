@@ -45,6 +45,7 @@ const BOSONS = {
         hb() {
             let x = E(0.01).mul(tmp.fermions.effs[1][1])
             if (hasTree("bs1")) x = x.mul(tmp.supernova?tmp.supernova.tree_eff.bs1:1)
+			if (player.ranks.hex.gte(6)) x = x.mul((tmp.elements.effect[6]||1));
             if (QCs.active()) x = x.pow(tmp.qu.qc_eff[3])
             if (hasPrestige(1,3)) x = x.pow(prestigeEff(1,3))
             return x

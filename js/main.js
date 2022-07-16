@@ -23,7 +23,8 @@ const FORMS = {
         if (quUnl()) x = x.mul(tmp.qu.bpEff)
         if (hasElement(103)) x = x.mul(tmp.elements.effect[103])
 		if(hasTree('qc5')) x = x.mul(treeEff('qc5'));
-
+		if (hasPrestige(0,60)) x = x.mul(prestigeEff(0,60,[E(1),E(1)])[0]);
+		
         if (player.mainUpg.br.includes(3)) x = x.pow(tmp.upgs.main[4][3].effect)
         if (hasPrestige(0,5)) x = x.pow(2)
 
@@ -64,6 +65,7 @@ const FORMS = {
         .softcap(tmp.massSoftGain3,tmp.massSoftPower3,0)
         .softcap(tmp.massSoftGain4,tmp.massSoftPower4,0)
         .softcap(tmp.massSoftGain5,tmp.massSoftPower5,0)
+        .softcap(tmp.massSoftGain6,tmp.massSoftPower6,0)
 
         if (hasElement(117)) x = x.pow(10)
 
@@ -99,6 +101,7 @@ const FORMS = {
         return s.min(tmp.massSoftGain3||1/0)
     },
     massSoftPower2() {
+        if (player.ranks.hex.gte(4)) return E(1)
         let p = E(player.qu.rip.active ? 0.1 : 0.25)
         if (hasElement(51)) p = p.pow(0.9)
         if (player.prestiges[0].gte(51)) p = p.pow(0.5)
@@ -136,6 +139,14 @@ const FORMS = {
     },
     massSoftPower5() {
         let p = E(0.05)
+        return p
+    },
+    massSoftGain6() {
+        let s = E("e1e29")
+        return s
+    },
+    massSoftPower6() {
+        let p = E(0.1)
         return p
     },
     tickspeed: {

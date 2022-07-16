@@ -114,6 +114,9 @@ const RANKS = {
             '1': "remove mass gain softcap^1, Hydrogen-1 is better.",
             '2': "Hardened Challenge scale 25% weaker.",
             '3': "Lithium-3's Effect is powered by 1.5 before softcaps.",
+            '4': "remove mass gain softcap^2, Beryllium-4's Effect is powered by 1.05.",
+            '5': "Hex boost Prestige Base Exponent.",
+            '6': "Carbon-6's Effect boost Higgs Bosons.",
         },
     },
     effect: {
@@ -208,6 +211,10 @@ const RANKS = {
             },
         },
         hex: {
+            '5'() {
+                let ret = player.ranks.hex.div(1000).toNumber()
+                return ret
+            },
         },
     },
     effDesc: {
@@ -239,6 +246,7 @@ const RANKS = {
             8(x) { return "^"+format(x)+" later" },
         },
         hex: {
+            5(x) { return "+"+format(x)},
         },
     },
     fp: {
@@ -264,6 +272,7 @@ const PRESTIGES = {
         let x = 0
         if (hasElement(100)) x += tmp.elements.effect[100]
         if (hasPrestige(0,32)) x += prestigeEff(0,32,0)
+        if (player.ranks.hex.gte(5)) x += RANKS.effect.hex[5]();
         return x+1
     },
     base() {
@@ -338,6 +347,12 @@ const PRESTIGES = {
             "53": `Meta-Rank starts 1.5x later.`,
             "55": `Multiply Quantum Foam and Death Shard gain by your Prestige Level.`,
             "58": `All rank scaling are 50% weaker.`,
+            "60": `Prestige Mass and Pre-Quantum Global Speed boost each other.`,
+            "61": `Prestige Mass Effect is applied to Pre-Meta Pent and Supernova scalings.`,
+            "62": `Prestige Mass Effect is applied to Super Prestige Level scaling.`,
+            "64": `Prestige Mass Formula from Prestige Level is better.`,
+            "74": `Prestige Mass Formula from Honor is better.`,
+            "75": `Prestige Mass Effect is applied to Pre-Meta Tier scalings.`,
         },
         {
             "1": `All-Star resources are raised by ^2.`,
@@ -347,7 +362,8 @@ const PRESTIGES = {
             "5": `Pent 5's reward is stronger based on Prestige Base.`,
             "7": `Quarks are boosted based on Honor.`,
             "9": `Gain free levels of each Primordium Particle equals to your Honor.`,
-            "10": `Reach the current endgame.`,
+            "10": `Unlock Prestige Mass.`,
+            "11": `Prestige Mass and Entropy boost each other.`,
         },
     ],
     rewardEff: [
@@ -368,6 +384,9 @@ const PRESTIGES = {
                 let x = player.prestiges[0].max(1)
                 return x
             },x=>x.format()+"x"],
+            "60": [_=>{
+                return [player.prestigeMass.add(1),(tmp.preQUGlobalSpeed||E(0)).add(1).log10().sqrt()];
+            },x=>x[0].format()+"x to Pre-Quantum Global Speed, "+x[1].format()+"x to Prestige Mass"],
             /*
             "1": [_=>{
                 let x = E(1)
@@ -394,6 +413,9 @@ const PRESTIGES = {
                 let x = player.prestiges[1].max(1)
                 return x
             },x=>"+"+x.format()],
+            "11": [_=>{
+                return [player.prestigeMass.add(1).sqrt(),player.qu.en.amt.add(1).log10().sqrt()];
+            },x=>x[0].format()+"x to Entropy Gain, "+x[1].format()+"x to Prestige Mass"],
         },
     ],
     reset(i) {
@@ -469,6 +491,9 @@ function updateRanksTemp() {
             if (PRESTIGES.rewardEff[x][y]) tmp.prestiges.eff[x][y] = PRESTIGES.rewardEff[x][y][0]()
         }
     }
+	
+	tmp.prestigeMassGain = prestigeMassGain()
+	tmp.prestigeMassEffect = prestigeMassEffect()
 }
 
 function updateRanksHTML() {
@@ -530,5 +555,34 @@ function updateRanksHTML() {
                 tmp.el["pres_auto_"+x].setTxt(false?"ON":"OFF")
             }
         }
+		
+		if (player.prestiges[1].gte(10)){
+			tmp.el["pres_mass"].setDisplay(true);
+			tmp.el["pres_mass2"].setTxt(formatMass(player.prestigeMass,0)+" "+formatGain(player.prestigeMass, tmp.prestigeMassGain, true))
+			tmp.el["pres_mass3"].setTxt(format(E(1).sub(prestigeMassEffect()).mul(100))+"%");
+		}else{
+			tmp.el["pres_mass"].setDisplay(false);
+		}
     }
+}
+
+function prestigeMassGain(){
+	if(player.prestiges[1].lt(10)){
+		return E(0);
+	}
+	let x= Decimal.log10(tmp.prestiges.base.add(10)).mul(player.prestiges[0]).mul(player.prestiges[1].pow(2)).pow(player.prestiges[1].div(10)).div(200000);
+	if (hasPrestige(0,60)) x = x.mul(prestigeEff(0,60,[E(1),E(1)])[1]);
+	if (hasPrestige(0,64)) x = x.mul(player.prestiges[0].sqrt().pow(player.prestiges[1].div(10)));
+	if (hasPrestige(1,11)) x = x.mul(prestigeEff(1,11,[E(1),E(1)])[1]);
+	if (hasPrestige(0,74)) x = x.mul(player.prestiges[1].pow(player.prestiges[1].div(10)));
+    if (player.md.break.upgs[11].gte(1)) x = x.mul(tmp.bd.upgs[11].eff||1)
+	return x;
+}
+
+function prestigeMassEffect(){
+	return E(0.965).pow(player.prestigeMass.add(1).log10().sqrt());
+}
+
+function calcPrestigeMass(dt){
+	player.prestigeMass = player.prestigeMass.add(tmp.prestigeMassGain.mul(dt))
 }

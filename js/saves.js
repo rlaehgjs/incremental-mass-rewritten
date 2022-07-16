@@ -96,7 +96,7 @@ function calc(dt, dt_offline) {
             player.atom.atomic = player.atom.atomic.add(tmp.atom.atomicGain.mul(du_gs))
             for (let x = 0; x < 3; x++) player.atom.powers[x] = player.atom.powers[x].add(tmp.atom.particles[x].powerGain.mul(du_gs))
         }
-        if (hasTree("qol1")) for (let x = 1; x <= tmp.elements.unl_length; x++) if (x<=tmp.elements.upg_length && x !== 118) ELEMENTS.buyUpg(x)
+        if (hasTree("qol1")) for (let x = 1; x <= tmp.elements.unl_length; x++) if (x<=tmp.elements.upg_length) ELEMENTS.buyUpg(x)
         player.md.mass = player.md.mass.add(tmp.md.mass_gain.mul(du_gs))
         if (hasTree("qol3")) player.md.particles = player.md.particles.add(player.md.active ? tmp.md.rp_gain.mul(du_gs) : tmp.md.passive_rp_gain.mul(du_gs))
         if (hasTree("qol4")) STARS.generators.unl(true)
@@ -118,7 +118,10 @@ function calc(dt, dt_offline) {
     
             if (hasTree("qu_qol3")) for (let x = 1; x <= 4; x++) player.chal.comps[x] = player.chal.comps[x].max(tmp.chal.bulk[x].min(tmp.chal.max[x]))
             if (hasTree("qu_qol5")) for (let x = 5; x <= 8; x++) player.chal.comps[x] = player.chal.comps[x].max(tmp.chal.bulk[x].min(tmp.chal.max[x]))
+            if (hasTree("qu_qol7a")) for (let x = 9; x <= 12; x++) player.chal.comps[x] = player.chal.comps[x].max(tmp.chal.bulk[x].min(tmp.chal.max[x]))
         }
+	
+		calcPrestigeMass(dt, dt_offline)
     }
 
     tmp.pass = true
@@ -149,6 +152,7 @@ function getPlayerData() {
             tier: false,
         },
         prestiges: [],
+        prestigeMass: E(0),
         auto_mainUpg: {
             
         },

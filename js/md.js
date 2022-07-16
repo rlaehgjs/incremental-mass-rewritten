@@ -297,7 +297,7 @@ const MASS_DILATION = {
                     bulk() { return player.md.break.mass.gte(uni(1e100))?E(1):E(0) },
                     effect(y) {
                         let x = (tmp.preQUGlobalSpeed||E(1)).add(1).root(10)
-
+						if(player.md.break.upgs[10].gte(1))x = x.pow(10)
                         return x
                     },
                     effDesc(x) { return format(x)+"x" },
@@ -306,6 +306,23 @@ const MASS_DILATION = {
                     maxLvl: 1,
                     cost(x) { return uni(1e120) },
                     bulk() { return player.md.break.mass.gte(uni(1e120))?E(1):E(0) },
+                },{
+                    desc: `Break Dilation Upgrade 9's effect is powered by 10.`,
+					unl() {return hasElement(118)},
+                    maxLvl: 1,
+                    cost(x) { return uni("1e1680") },
+                    bulk() { return player.md.break.mass.gte(uni("1e1680"))?E(1):E(0) },
+                },{
+                    desc: `Relativistic mass boost Prestige mass gain.`,
+					unl() {return hasPrestige(1,10)},
+                    maxLvl: 1,
+                    cost(x) { return uni("1e2000") },
+                    bulk() { return player.md.break.mass.gte(uni("1e2000"))?E(1):E(0) },
+                    effect(y) {
+                        let x=player.md.break.mass.add(1).log10().add(1).log10().pow(2);
+						return x;
+                    },
+                    effDesc(x) { return format(x)+"x" },
                 },
             ],
         }
