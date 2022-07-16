@@ -44,7 +44,9 @@ const MASS_DILATION = {
         if (hasElement(40)) x = x.mul(tmp.elements.effect[40])
         if (hasElement(32)) x = x.pow(1.05)
         if (QCs.active()) x = x.pow(tmp.qu.qc_eff[4])
-        return x.softcap(mlt(1e12),0.5,0)
+		x = x.softcap(mlt(1e12),0.5,0);
+		tmp.dmOverflow = overflow(x,"e5e28",0.8).log(x);
+        return overflow(x,"e5e28",0.8);
     },
     mass_req() {
         let x = E(10).pow(player.md.particles.add(1).div(tmp.md.rp_mult_gain).root(tmp.md.rp_exp_gain).add(14).mul(40)).mul(1.50005e56)
@@ -444,6 +446,8 @@ function updateMDHTML() {
 
     tmp.el.dmSoft1.setDisplay(player.md.mass.gte(mlt(1e12)))
     tmp.el.dmSoftStart1.setTxt(formatMass(mlt(1e12)))
+    tmp.el.dmOverflow.setDisplay(player.md.mass.gte("e5e28"));
+    tmp.el.dmOverflow2.setTxt(format(tmp.dmOverflow));
 }
 
 function updateBDHTML() {

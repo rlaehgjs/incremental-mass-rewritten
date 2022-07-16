@@ -332,6 +332,8 @@ function updateBlackHoleHTML() {
 	tmp.el.massSoft2.setDisplay(tmp.bh.mass_gain.gte(tmp.bh.massSoftGain))
 	tmp.el.massSoftStart2.setTxt(formatMass(tmp.bh.massSoftGain))
 
+	tmp.el.bhOverflow.setDisplay(false)
+	//tmp.el.bhOverflow2.setTxt(format(tmp.bhOverflow))
 	tmp.el.bhEffect.setTxt(format(tmp.bh.effect))
 
 	tmp.el.bhCondenser_lvl.setTxt(format(player.bh.condenser,0)+(tmp.bh.condenser_bonus.gte(1)?" + "+format(tmp.bh.condenser_bonus,0):""))
@@ -398,6 +400,10 @@ function updateHTML() {
 				tmp.el.massSoftStart6.setTxt(formatMass(tmp.massSoftGain5))
 				tmp.el.massSoft7.setDisplay(tmp.massGain.gte(tmp.massSoftGain6))
 				tmp.el.massSoftStart7.setTxt(formatMass(tmp.massSoftGain6))
+				
+				
+				tmp.el.massOverflow.setDisplay(false)
+				//tmp.el.massOverflow2.setTxt(format(tmp.massOverflow))
 			}
 			if (tmp.stab[0] == 1) {
 				updateBlackHoleHTML()

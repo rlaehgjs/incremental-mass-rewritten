@@ -117,6 +117,7 @@ const RANKS = {
             '4': "remove mass gain softcap^2, Beryllium-4's Effect is powered by 1.05.",
             '5': "Hex boost Prestige Base Exponent.",
             '6': "Carbon-6's Effect boost Higgs Bosons.",
+            '7': "Nitrogen-7's Effect is better.",
         },
     },
     effect: {
@@ -353,6 +354,9 @@ const PRESTIGES = {
             "64": `Prestige Mass Formula from Prestige Level is better.`,
             "74": `Prestige Mass Formula from Honor is better.`,
             "75": `Prestige Mass Effect is applied to Pre-Meta Tier scalings.`,
+            "77": `Prestige Mass Effect is applied to Pre-Meta Rank scalings and Super Honor scaling.`,
+            "79": `Prestige Mass Effect is applied to Pre-Meta Cosmic String scalings.`,
+            "80": "Mass gain softcap^3 is 10% weaker.",
         },
         {
             "1": `All-Star resources are raised by ^2.`,
@@ -364,6 +368,7 @@ const PRESTIGES = {
             "9": `Gain free levels of each Primordium Particle equals to your Honor.`,
             "10": `Unlock Prestige Mass.`,
             "11": `Prestige Mass and Entropy boost each other.`,
+            "12": `Reach the current endgame.`,
         },
     ],
     rewardEff: [
@@ -570,12 +575,13 @@ function prestigeMassGain(){
 	if(player.prestiges[1].lt(10)){
 		return E(0);
 	}
-	let x= Decimal.log10(tmp.prestiges.base.add(10)).mul(player.prestiges[0]).mul(player.prestiges[1].pow(2)).pow(player.prestiges[1].div(10)).div(200000);
+	let x= Decimal.log10(tmp.prestiges.base.add(10)).mul(player.prestiges[0]).mul(player.prestiges[1].pow(2)).pow(player.prestiges[1].div(10)).div(400000);
 	if (hasPrestige(0,60)) x = x.mul(prestigeEff(0,60,[E(1),E(1)])[1]);
 	if (hasPrestige(0,64)) x = x.mul(player.prestiges[0].sqrt().pow(player.prestiges[1].div(10)));
 	if (hasPrestige(1,11)) x = x.mul(prestigeEff(1,11,[E(1),E(1)])[1]);
 	if (hasPrestige(0,74)) x = x.mul(player.prestiges[1].pow(player.prestiges[1].div(10)));
     if (player.md.break.upgs[11].gte(1)) x = x.mul(tmp.bd.upgs[11].eff||1)
+    if (hasTree("pm1")) x = x.mul(tmp.supernova.tree_eff.pm1)
 	return x;
 }
 

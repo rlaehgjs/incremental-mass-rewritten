@@ -41,8 +41,8 @@ const TREE_IDS = [
         [],
         [],
         [],
-        ['fn16','fn17','fn15'],
-        ['prim6'],
+        ['fn16','fn17','fn15','pm1'],
+        ['prim6','br3','qc6'],
     ],
 ]
 
@@ -981,6 +981,18 @@ const TREE_UPGS = {
             },
             effDesc(x) { return format(x,0)+"x" },
         },
+        qc6: {
+            unl() { return player.atom.elements.includes(118) },
+            qf: true,
+            branch: ['qc5'],
+            desc: `Quantum Shard's base is increased by Prestige mass.`,
+            cost: E(1e158),
+            effect() {
+                let x = player.prestigeMass.add(1).log10().add(1).log10();
+                return x
+            },
+            effDesc(x) { return "+"+format(x) },
+        },
         en1: {
             unl() { return player.qu.rip.first },
             qf: true,
@@ -1020,6 +1032,26 @@ const TREE_UPGS = {
             branch: ['br1'],
             desc: `All elements can be bought in Big Rip.`,
             cost: E(1e114),
+        },
+        br3: {
+            unl() { return hasElement(118) },
+            qf: true,
+            branch: ['qu11'],
+            req() { return player.supernova.times.gte(32) && player.qu.rip.active },
+            reqDesc() { return `Reach 32 Supernovas in Big Rip.` },
+            desc: `When outside Big Rips, Plutonium-94 works, but 90% weaker.`,
+            cost: E(1e157),
+        },
+        pm1: {
+            unl() { return hasPrestige(0,10) },
+            branch: [],
+            desc: `Neutron Star boost Prestige mass gain.`,
+            cost: E("1e300000000"),
+            effect() {
+                let x = player.supernova.stars.add(1).log10().add(1).log10();
+                return x
+            },
+            effDesc(x) { return "x"+format(x) },
         },
 
         // Other

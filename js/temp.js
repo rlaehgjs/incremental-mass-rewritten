@@ -126,6 +126,7 @@ function resetTemp() {
     for (let x = 0; x < MASS_DILATION.break.upgs.ids.length; x++) tmp.bd.upgs[x] = {}
     tmp.el = keep[0]
     tmp.prevSave = keep[1]
+	tmp.preQUGlobalSpeed = E(1)
 }
 
 resetTemp()
@@ -189,6 +190,7 @@ function updateBlackHoleTemp() {
 }
 
 function updateTemp() {
+	
     tmp.offlineActive = player.offline.time > 1
     tmp.offlineMult = tmp.offlineActive?player.offline.time+1:1
 
