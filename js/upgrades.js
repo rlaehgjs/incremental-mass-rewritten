@@ -691,7 +691,7 @@ const UPGS = {
                 }
             },
             auto_unl() { return false },
-            lens: 13,
+            lens: 14,
             1: {
                 desc: `Multiply your quantum times gain by (200+Infinity times). Infinity Mass boost Quantum Foam gain. The actual cost of this upgrade is 1 mg of Infinity Mass.`,
                 cost: E(1e-3),
@@ -760,11 +760,11 @@ const UPGS = {
             },
             10: {
                 desc: `Infinity Mass formula from Prestige mass is better. Mass gain softcap^8 is 50% weaker.`,
-                cost: E(10000000),
+                cost: E(6000000),
             },
             11: {
                 desc: `Gain 100% of Infinity Mass gain per second. Gain 1 Infinity count per second.`,
-                cost: E(300000000),
+                cost: E(200000000),
             },
             12: {
                 desc: `Infinity Mass Boost Infinity count gain.`,
@@ -778,6 +778,10 @@ const UPGS = {
             13: {
                 desc: `Mass gain softcap^8-9 are 1% weaker.`,
                 cost: E(2e12),
+            },
+            14: {
+                desc: `WIP`,
+                cost: E(8e12),
             },
         },
     },

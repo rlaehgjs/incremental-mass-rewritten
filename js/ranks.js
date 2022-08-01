@@ -436,7 +436,7 @@ const PRESTIGES = {
             "135": `Multiply Honor 9 reward by log10(Prestige Level).`,
             "140": `Effect of W- Bosons affects mass gain softcap ^7.`,
             "141": `Entropic Evaporation^2 is 5% weaker.`,
-            "171": `Prestige Level boost Infinity Mass gain.`,
+            "165": `Prestige Level boost Infinity Mass gain.`,
         },
         {
             "1": `All-Star resources are raised by ^2.`,
@@ -499,7 +499,7 @@ const PRESTIGES = {
                 let x = player.prestigeMass.add(1).log10();
                 return x
             },x=>x.format()+"x"],
-			"171": [_=>{
+			"165": [_=>{
                 let x = player.prestiges[0].add(1).log10().pow(1.5);
                 return x
             },x=>x.format()+"x"],
