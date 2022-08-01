@@ -693,8 +693,8 @@ const UPGS = {
             auto_unl() { return false },
             lens: 13,
             1: {
-                desc: `Multiply your quantum times gain by (200+Infinity times). Infinity Mass boost Quantum Foam gain. The actual cost of this upgrade is 100 mg of Infinity Mass.`,
-                cost: E(0.1),
+                desc: `Multiply your quantum times gain by (200+Infinity times). Infinity Mass boost Quantum Foam gain. The actual cost of this upgrade is 1 mg of Infinity Mass.`,
+                cost: E(1e-3),
                 effect() {
                     let x = player.inf.points.add(1).pow(2);
                     return x
