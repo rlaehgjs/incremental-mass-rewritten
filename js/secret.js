@@ -26,7 +26,7 @@ const ssf = [
             ss[0] = ""
             addPopup({
                 html: `
-                    You inputed "BanGDream" in the periodic table.
+                    You input "BanGDream" in the periodic table.
 					<br>
 					I'm a BanG Dream! Girls Band Party! player.
 					<br>
