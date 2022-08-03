@@ -3,6 +3,11 @@ const QCs = {
     getMod(x) { return player.qu.rip.active ? BIG_RIP_QC[x] : player.qu.qc.mods[x] },
     incMod(x,i) { if (!this.active()) player.qu.qc.mods[x] = Math.min(Math.max(player.qu.qc.mods[x]+i,0),hasTree('qc4')?Math.max(Math.floor(player.qu.qc.shard/8),10):10) },
     enter() {
+		if(!hasTree('unl3')){
+			player.qu.qc.active = false
+            QUANTUM.doReset(player.qu.qc.active)
+			return;
+		}
         if (!player.qu.qc.active) {
             let is_zero = true
             for (let x = 0; x < QCs_len; x++) if (this.getMod(x)>0) {
@@ -119,6 +124,7 @@ function saveQCPreset(x) {
 function loadQCPreset(x) {
     if (QCs.active()) return
     player.qu.qc.mods = player.qu.qc.presets[x].mods
+	for (let x = 0; x < QCs_len; x++)if(player.qu.qc.mods[i] > (hasTree('qc4')?Math.max(Math.floor(player.qu.qc.shard/8),10):10))player.qu.qc.mods[i] = (hasTree('qc4')?Math.max(Math.floor(player.qu.qc.shard/8),10):10);
     addNotify("Preset Loaded to Modifiers")
     updateQCModPresets()
 }

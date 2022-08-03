@@ -306,6 +306,10 @@ function wipe(reload=false) {
 
 function loadPlayer(load) {
     const DATA = getPlayerData()
+	if(load.dim_shard>0){
+		alert("Saves from Incremental Mass Rewritten Vanilla 1.0 beta or above is not supported in this NG+ Version!");
+		return true;
+	}
     player = deepNaN(load, DATA)
     player = deepUndefinedAndDecimal(player, DATA)
     convertStringToDecimal()
@@ -369,9 +373,10 @@ function save(){
 
 function load(x){
     if(typeof x == "string" & x != ''){
-        loadPlayer(JSON.parse(atob(x)))
+        return loadPlayer(JSON.parse(atob(x)))
     } else {
         wipe()
+		return false
     }
 }
 
@@ -429,7 +434,7 @@ function importy() {
                     addNotify("Error Importing, because it got NaNed")
                     return
                 }
-                load(loadgame)
+                if(load(loadgame))return;
                 save()
                 resetTemp()
                 loadGame(false)
