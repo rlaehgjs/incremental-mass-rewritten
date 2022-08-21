@@ -248,8 +248,8 @@ const FORMS = {
             }
             if (hasPrestige(0,6)) ss = ss.pow(100)
             if (hasElement(102)) ss = ss.pow(100)
-			if (hasUpgrade('rp',16)) ss = E(1/0)
-            step = step.softcap(ss,p,0)
+			if (hasUpgrade('rp',16)) ss = EINF
+            else step = step.softcap(ss,p,0)
             
             let eff = step.pow(t.add(bonus).mul(hasElement(80)?25:1))
             if (hasElement(18)) eff = eff.pow(tmp.elements.effect[18])
