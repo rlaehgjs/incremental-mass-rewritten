@@ -476,7 +476,7 @@ function loop() {
     updateTemp()
     updateHTML()
     calc(diff/1000*tmp.offlineMult,diff/1000);
-    date = Date.now();
+    date = date+diff;
     player.offline.current = date
 }
 
