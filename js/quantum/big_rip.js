@@ -1,5 +1,6 @@
 const BIG_RIP = {
     rip() {
+		if (CHALS.inChal(14)) return
         if (!player.qu.rip.active && player.confirms.br) if (!confirm(`Are you sure you want to Big Rip the Dimension?
         When Big Rip the Dimension, Entropy Rewards don’t work, all Primordium effects are 50% weaker except Epsilon Particles that don’t work, tree [qu2, qu10] doesn’t work, and you are trapped in Quantum Challenge with modifiers [10,2,10,10,5,0,2,10].
         Death Shards are gained based on your normal mass while Big Ripped.
@@ -11,6 +12,7 @@ const BIG_RIP = {
         QUANTUM.enter(false,true,true)
     },
     gain() {
+		if (CHALS.inChal(13)) return E(0)
         let x = player.mass.add(1).log10().div(2e5).max(0)
         if (!(player.qu.rip.active || hasTree('qu_qol12')) || x.lt(1)) return E(0)
         if (hasTree('br1')) x = x.mul(treeEff('br1'))
@@ -29,7 +31,7 @@ const BIG_RIP = {
         if (hasPrestige(0,55)) x = x.mul(player.prestiges[0].max(1))
 		if (hasPrestige(0,98)) x = x.mul(prestigeEff(0,98,[E(1),E(1)])[0]);
         if (hasUpgrade('inf',3)) x = x.mul(upgEffect(5,3))
-		x = overflow(x,Number.MAX_VALUE,hasUpgrade('inf',20)?0.35:hasUpgrade('inf',19)?0.3:0.25);
+		x = overflow(x,Number.MAX_VALUE,E(hasUpgrade('inf',20)?0.35:hasUpgrade('inf',19)?0.3:0.25).pow(hasElement(159)?(tmp.chal?tmp.chal.eff[14]:1):1));
         return x.floor()
     },
 }
