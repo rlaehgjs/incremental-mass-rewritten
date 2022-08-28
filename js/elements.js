@@ -383,6 +383,7 @@ function updateOptionsHTML() {
 	tmp.el.total_time.setTxt(formatTime(player.time))
 	tmp.el.offline_active.setTxt(player.offline.active?"ON":"OFF")
 	tmp.el.mass_display.setTxt(player.mass_display==1?"Always show g":player.mass_display==2?"Always show uni":player.mass_display==3?"Always show mlt":"Normal")
+	tmp.el.show_supernova.setTxt(player.show_supernova==1?"Hidden":"Shown")
 	tmp.el.tree_anim_btn.setDisplay(player.supernova.times.gte(1) || quUnl())
 	tmp.el.tree_anim.setTxt(TREE_ANIM[player.options.tree_animation])
 

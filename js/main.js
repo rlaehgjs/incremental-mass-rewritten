@@ -611,6 +611,7 @@ function format(ex, acc=4, max=12, type=player.options.notation) {
 
 function turnOffline() { player.offline.active = !player.offline.active }
 function turnMassDisplay() { player.mass_display = ((player.mass_display || 0) + 1) % 4 }
+function turnShowSupernova() { player.show_supernova = ((player.show_supernova || 0) + 1) % 2 }
 
 const ARV = ['mlt','mgv','giv','tev','pev','exv','zev','yov']
 
@@ -655,12 +656,12 @@ function formatGain(amt, gain, isMass=false) {
     let next = amt.add(gain)
     let rate
     let ooms = next.max(1).log10().div(amt.max(1).log10())
-    if (ooms.gte(10) && amt.gte('ee10') && !isMass) {
+    if (((ooms.gte(10) && amt.gte('ee100')) || ooms.gte(10**0.05) && amt.gte('ee1000')) && (!isMass || player.mass_display == 1 || player.mass_display == 2)) {
         ooms = ooms.log10().mul(20)
         rate = "(+"+format(ooms) + " OoMs^2/sec)"
-    }
-    ooms = next.div(amt)
-    if ((ooms.gte(10) && amt.gte(1e100)) || (isMass && player.mass_display == 3)) {
+    }else{
+		ooms = next.div(amt)
+		if ((ooms.gte(10) && amt.gte(1e100)) || (isMass && player.mass_display == 3)) {
         ooms = ooms.log10().mul(20)
         if (isMass && ((amt.gte(mlt(1)) && ooms.gte(1e6)) || player.mass_display == 3) && player.mass_display != 1 && player.mass_display != 2){
 			let mlt_amt = getMltValue(amt)
@@ -670,6 +671,7 @@ function formatGain(amt, gain, isMass=false) {
         else rate = "(+"+format(ooms) + " OoMs/sec)"
     }
     else rate = "(+"+f(gain)+"/sec)"
+	}
     return rate
 }
 
