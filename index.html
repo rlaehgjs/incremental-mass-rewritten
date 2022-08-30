@@ -159,7 +159,14 @@
 			<div id="superGalEff">
 			</div>
 			<hr>
+			<span id="galPowNextspan">Next Galactic resource at <span id="galPowNext">0</span> Supernova Galaxies<br></span>
 			<span id="galPow0span">You have <span id="galPow0">0</span> Galactic Power (gain based on neutron star), which are boosting mass gain by ^<span id="galPow0_eff">1</span><br></span>
+			<span id="galPow2span">You have <span id="galPow2">0</span> Galactic Dark Energy (gain based on dark matter), which are boosting black hole mass gain by ^<span id="galPow2_eff">1</span><br></span>
+			<span id="galPow1span">You have <span id="galPow1">0</span> Galactic Atoms (gain based on atoms), which are boosting quark gain by ^<span id="galPow1_eff">1</span><br></span>
+			<span id="galPow3span">You have <span id="galPow3">0</span> Galactic Bosons (gain based on Photons and Gluons), which are boosting all bosons gain by ^<span id="galPow3_eff">1</span><br></span>
+			<span id="galPow4span">You have <span id="galPow4">0</span> Galactic U-Fermions (gain based on U-Quarks and U-Leptons), which are boosting all U-Fermions gain by ^<span id="galPow4_eff">1</span><br></span>
+			<span id="galPow5span">You have <span id="galPow5">0</span> Galactic Radiation (gain based on frequency), which are boosting all radiation gain by ^<span id="galPow5_eff">1</span><br></span>
+			<span id="galQkspan">You have <span id="galQk">0</span> Galactic Quarks (gain based on Quarks and U-Quarks)</span>
         </div>
     </div>
     <div id='app' style='display: none'>
@@ -206,9 +213,12 @@
                     </div><div class="resources sml" id="infinity_div">
                         <div tooltip="Infinity Mass" t-size="small"><img class="res_img" src="images/inf.png" onclick="INFINITY_LAYER.enter()" onmousemove="FORMS.reset_msg.set('infinity')" onmouseleave="FORMS.reset_msg.reset()" style="cursor: pointer;"></div>
                         <span style="margin-left: 5px; text-align: left;" id="infAmt">X</span>
-                    </div><div class="resources sml" id="eternity_div">
+                    </div><div class="resources sml" id="eternity_div" style="color:rgb(255,0,255);">
                         <div tooltip="Eternal Mass" t-size="small"><img class="res_img" src="images/et.png" onclick="ETERNITY_LAYER.enter()" onmousemove="FORMS.reset_msg.set('eternity')" onmouseleave="FORMS.reset_msg.reset()" style="cursor: pointer;"></div>
                         <span style="margin-left: 5px; text-align: left;" id="etAmt">X</span>
+                    </div><div class="resources sml quark_color" id="galQk_div">
+                        <div tooltip="Galactic Quark" t-size="small"><img class="res_img" src="images/test.png"></div>
+                        <span style="margin-left: 5px; text-align: left;" id="galQkAmt">X</span>
                     </div>
                 </div>
             </div>
