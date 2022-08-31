@@ -1380,7 +1380,7 @@ const ELEMENTS = {
 		},
 		{
 			desc: `Effect of Galactic Atoms is better.`,
-			cost: E(2e9),
+			cost: E(2.5e9),
 			galQk: true,
 		},
 	],
