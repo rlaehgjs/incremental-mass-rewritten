@@ -42,7 +42,7 @@ const SUPERNOVA_GALAXY = {
 		if(player.superGal.lt(2))player.qu.chr_get = [];
 		player.qu.times = SUPERNOVA_GALAXY.effects.qut();
 		tmp.radiation.unl = false;
-		if(player.superGal.lt(6))player.supernova.tree=[];
+		if(player.superGal.lt(5))player.supernova.tree=[];
 		if(player.superGal.lt(10))player.qu.rip.first = false;
 		if(player.superGal.lt(2))player.supernova.post_10 = false;
 		player.md.break.upgs=[E(0),E(0),E(0),E(0),E(0),E(0),E(0),E(0),E(0),E(0),E(0),E(0)];
@@ -228,11 +228,12 @@ function updateSupernovaGalaxyHTML() {
 		if(player.superGal.gte(2))html += "<br>You start with Chroma Unlocked";
 		if(player.superGal.gte(2))html += "<br>You start with "+format(SUPERNOVA_GALAXY.effects.qut())+" Quantizes";
 		if(player.superGal.gte(2))html += "<br>Gain "+format(SUPERNOVA_GALAXY.effects.qut2())+"x more Quantizes, Infinities and Eternities";
+		if(player.superGal.gte(2))html += "<br>Neutron Tree will be without the requirements";
 		if(player.superGal.gte(3))html += "<br>Accelerator Effect Softcap^1-^2 starts "+format(SUPERNOVA_GALAXY.effects.aesc())+"x later";
 		tmp.el.galPow0.setTxt(format(player.galPow[0])+player.galPow[0].formatGain(SUPERNOVA_GALAXY.galPow0_gain()))
 		tmp.el.galPow0_eff.setTxt(format(SUPERNOVA_GALAXY.galPow0_eff()))
+		if(player.superGal.gte(5))html += "<br>Permanently Keep your Neutron Tree";
 		if(player.superGal.gte(6)){
-			html += "<br>Permanently Keep your Neutron Tree";
 			tmp.el.galPow1.setTxt(format(player.galPow[1])+player.galPow[1].formatGain(SUPERNOVA_GALAXY.galPow1_gain()))
 			tmp.el.galPow1_eff.setTxt(format(SUPERNOVA_GALAXY.galPow1_eff()))
 			tmp.el.galPow2.setTxt(format(player.galPow[2])+player.galPow[2].formatGain(SUPERNOVA_GALAXY.galPow2_gain()))
