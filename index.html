@@ -167,6 +167,21 @@
 			<span id="galPow4span">You have <span id="galPow4">0</span> Galactic U-Fermions (gain based on U-Quarks and U-Leptons), which are boosting all U-Fermions gain by ^<span id="galPow4_eff">1</span><br></span>
 			<span id="galPow5span">You have <span id="galPow5">0</span> Galactic Radiation (gain based on frequency), which are boosting all radiation gain by ^<span id="galPow5_eff">1</span><br></span>
 			<span id="galQkspan">You have <span id="galQk">0</span> Galactic Quarks (gain based on Quarks and U-Quarks)</span>
+        </div><div id="stab_frame5_5">
+            Choosing any Galactic Fermion will force a Supernova Galaxy reset!<br>
+            In Galactic Fermions, you can't gain Infinity and Eternity mass!<br>
+            Galactic Fermion tiers boost your Galactic U-Fermions gain.<br><br>
+            <button class="btn" onclick="FERMIONS.backNormal()">Back to Normal</button><br><br>
+            <div class="fermions">
+                <div class="f_quark sub_f">
+                    You have <span id="fgquarkAmt">X</span> Total Galactic Quark Tiers<br><br>
+                    <div id="fermions_gquark_table" class="table_center"></div>
+                </div>
+                <div class="f_lepton sub_f">
+                    You have <span id="fgleptonAmt">X</span> Total Galactic Lepton Tiers<br><br>
+                    <div id="fermions_glepton_table" class="table_center"></div>
+                </div>
+            </div>
         </div>
     </div>
     <div id='app' style='display: none'>
@@ -466,6 +481,19 @@
                 <div class="table_center">
                     <div id="bd_upg_table" class="table_center" style="width: 1000px;"></div>
                 </div>
+            </div>
+            <div id="stab_frame4_4">
+                You have <span id="unassignGQuarkAmt">X</span> Galactic Quarks<br><br>
+                <div>
+                    <button class="btn" onclick="ATOM.particles.gassignAll()">Distribute</button><br><br>
+                    <input class="input_ratio" style="color: #0f0;" type="number" min="1" id="gratio_d0">
+                    <input class="input_ratio" style="color: #ff0;" type="number" min="1" id="gratio_d1">
+                    <input class="input_ratio" style="color: #f00;" type="number" min="1" id="gratio_d2">
+                </div>
+                <br><br>
+                Ratio Mode: <span id="atom_ratio_gq">X</span><br>
+                <button class="btn" onclick="player.atom.ratio = 0">+1</button><button class="btn"onclick="player.atom.ratio = 1">25%</button><button class="btn"onclick="player.atom.ratio = 2">100%</button><br><br>
+                <div id="gparticles_table" class="table_center" style="justify-content: space-evenly;"></div>
             </div>
         </div><div id="tab_frame6">
             <div id="stab_frame6_0">
