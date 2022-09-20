@@ -13,7 +13,7 @@ const SUPERNOVA_GALAXY = {
 		if(!force)if((confirm("Are you sure to reset for a Supernova Galaxy? It will reset all previous, including Prestiges.")?!confirm("ARE YOU SURE ABOUT IT???"):true)) return
 		if(!force && hasElement(291))player.superGal = player.superGal.max(SUPERNOVA_GALAXY.bulk());
 		else if(!force)player.superGal = player.superGal.add(1);
-		if(player.superGal.lt(11))player.prestiges=[E(0),E(0),E(0)];
+		if(player.superGal.lt(11))player.prestiges=[E(0),E(0),E(0),E(0)];
 		if(player.superGal.lt(6))player.supernova.tree=[];
 		player.chal.comps[9] = E(0)
 		player.chal.comps[10] = E(0)

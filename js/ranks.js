@@ -762,12 +762,15 @@ const PRESTIGES = {
             "42": `Renown boost Eternal Mass gain.`,
             "43": `Remove Super Prestige Level scaling.`,
             "47": `Remove Ultra Fermion Tier scaling.`,
+            "49": `Meta-Presige Level starts 1.2x later.`,
+            "51": `Prestige Muscler boost itself.`,
 		},
 		{
             "1": `Remove Hyper Prestige Level scaling.`,
             "2": `Remove Hyper Fermion Tier scaling.`,
             "3": `Multiply Honor 9 reward by Renown.`,
             "4": `Prestige Mass Effect is applied to Ultra Glory scaling.`,
+            "5": `Add +5% to Glory 25's effectiveness`,
 		},
     ],
     rewardEff: [
@@ -913,12 +916,17 @@ const PRESTIGES = {
             },x=>"x"+x.format()],
             "25": [_=>{
                 let x = 5;
+				if (hasPrestige(3,5))x += 5;
                 return x
             },x=>x+"% effectiveness"],
             "42": [_=>{
                 let x = player.prestiges[3].add(1)
                 return x
             },x=>"x"+x.format()],
+            "51": [_=>{
+                let x = player.prestigeMassUpg[1].add(1)
+                return x
+            },x=>"x"+x.format()+" to power"],
 		},
 		{
             "3": [_=>{

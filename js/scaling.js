@@ -6,6 +6,7 @@ const SCALE_START = {
 		pent: E(15),
 		hex: E(100),
 		hept: E(15),
+		oct: E(15),
         massUpg: E(100),
 		tickspeed: E(100),
 		bh_condenser: E(100),
@@ -42,6 +43,7 @@ const SCALE_START = {
 		tetr: E(150),
 		pent: E(500),
 		hex: E(1100),
+		hept: E(1000),
 		massUpg: E(1e11),
 		tickspeed: E(700),
 		bh_condenser: E(750),
@@ -75,6 +77,7 @@ const SCALE_POWER= {
 		pent: 2,
 		hex: 3,
 		hept: 4,
+		oct: 5,
 		massUpg: 2.5,
 		tickspeed: 2,
 		bh_condenser: 2,
@@ -111,6 +114,7 @@ const SCALE_POWER= {
 		tetr: 6,
 		pent: 6,
 		hex: 10,
+		hept: 10,
 		massUpg: 10,
 		tickspeed: 7,
 		bh_condenser: 4,
@@ -152,6 +156,7 @@ const SCALING_RES = {
 	pent(x=0) { return player.ranks.pent },
 	hex(x=0) { return player.ranks.hex },
 	hept(x=0) { return player.ranks.hept },
+	oct(x=0) { return player.ranks.oct },
 	tickspeed(x=0) { return player.tickspeed },
     massUpg(x=1) { return E(player.massUpg[x]||0) },
 	bh_condenser(x=0) { return player.bh.condenser },
@@ -173,6 +178,7 @@ const NAME_FROM_RES = {
 	pent: "Pent",
 	hex: "Hex",
 	hept: "Hept",
+	oct: "Oct",
 	massUpg: "Mass Upgrades",
 	tickspeed: "Tickspeed",
 	bh_condenser: "Black Hole Condenser",
@@ -287,6 +293,9 @@ function getScalingStart(type, name) {
 		}
 		if (name=="prestige1") {
 			if (hasPrestige(2,2)) start = start.add(1)
+		}	
+		if (name=="gfTier") {
+			if (hasElement(303)) start = start.mul(1.5)
 		}
 	}
 	if (type=="hyper") {
@@ -364,6 +373,7 @@ function getScalingStart(type, name) {
 		}
 		if (name=="prestige0") {
 			if (hasElement(285)) start = start.mul(3.5)
+			if (hasPrestige(2,49)) start = start.mul(1.2)
 		}
 	}
 	if (name=='supernova') {
@@ -606,6 +616,7 @@ function getScalingPower(type, name) {
 		}
 		if (name=="hex") {
 			if (hasPrestige(2,25)) power = power.mul((tmp.prestigeMassEffect||E(1)).pow(0.05))
+			if (hasPrestige(3,5)) power = power.mul((tmp.prestigeMassEffect||E(1)).pow(0.05))
 		}
 		if (name=="prestige2") {
 			if (hasPrestige(3,4)) power = power.mul(tmp.prestigeMassEffect)

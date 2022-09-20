@@ -219,6 +219,7 @@ const UPGS = {
             effect(x) {
                 let step = player.prestiges[0]
                 step = step.mul(tmp.upgs.prestigeMass[2]?tmp.upgs.prestigeMass[2].eff.eff:1)
+                if (hasPrestige(2,51)) step = step.mul(prestigeEff(2,51))
                 let ret = step.mul(x).add(1)
                 return {step: step, eff: ret}
             },

@@ -21,6 +21,7 @@ function updateChalHTML() {
 				if(hasElement(222) && x == 13)tmp.el["chal_comp_"+x].setTxt(format(player.chal.comps[x],0));
 				if(hasElement(289) && x == 14)tmp.el["chal_comp_"+x].setTxt(format(player.chal.comps[x],0));
 				if(hasElement(289) && x == 15)tmp.el["chal_comp_"+x].setTxt(format(player.chal.comps[x],0));
+				if(hasElement(302) && x == 16)tmp.el["chal_comp_"+x].setTxt(format(player.chal.comps[x],0));
             }
         }
         tmp.el.chal_enter.setVisible(player.chal.active != player.chal.choosed)
@@ -162,6 +163,7 @@ const CHALS = {
         if (hasElement(133) && (i==12)) return EINF
         if (hasElement(222) && (i==13)) return EINF
         if (hasElement(289) && (i==14||i==15)) return EINF
+        if (hasElement(302) && (i==16)) return EINF
 		
         let x = this[i].max
         if (i <= 4) x = x.add(tmp.chal?tmp.chal.eff[7]:0)

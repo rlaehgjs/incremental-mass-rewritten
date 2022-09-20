@@ -1590,6 +1590,7 @@ const ELEMENTS = {
 			cost: E("1.5e8526"),
 			effect() {
 				let x = player.ranks.tetr.add(10).log10().sqrt();
+				if(hasElement(301))x = x.pow(2);
 				return x
 			},
 			effDesc(x) { return format(x)+"x later"; },
@@ -1731,6 +1732,24 @@ const ELEMENTS = {
 			cost: E("1e44"),
 			galQk: true,
 		},
+		{
+			desc: `Element 272 is better.`,
+			cost: E("1.5e12746"),
+		},
+		{
+			desc: `Auto-Complete Challenges 14-15, and uncap C16 completions.`,
+			cost: E("1.5e1071"),
+			et: true,
+		},
+		{
+			desc: `Super Galactic Fermion Tier starts 1.5x later.`,
+			cost: E("5e44"),
+			galQk: true,
+		},
+		{
+			desc: `Eternal Mass is added to base Infinity Mass gain formula.`,
+			cost: E("1.5e13676"),
+		},
 	],
     /*
     {
@@ -1745,7 +1764,7 @@ const ELEMENTS = {
     */
     getUnlLength() {
 		
-		if(hasElement(291))return 300;
+		if(hasElement(291))return 310;
 		if(hasElement(290))return 291;
 		if(player.superGal.gte(10))return 290;
 		if(player.superGal.gte(1))return 218;

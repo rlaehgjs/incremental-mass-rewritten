@@ -23,7 +23,12 @@ const INFINITY_LAYER = {
 			x = x.mul(z)
 		}
 		if (hasElement(189)){
-			let z = overflow(player.inf.points.add(1).log(Number.MAX_VALUE),1000,0.5);
+			let z = player.inf.points.add(1).log(Number.MAX_VALUE);
+			if (z.lt(1)) z=E(1)
+			x = x.mul(z)
+		}
+		if (hasElement(304)){
+			let z = player.et.points.add(1).log(Number.MAX_VALUE);
 			if (z.lt(1)) z=E(1)
 			x = x.mul(z)
 		}

@@ -130,6 +130,8 @@ function calc(dt, dt_offline) {
             if (hasTree("qu_qol7a")) for (let x = 9; x <= 12; x++) player.chal.comps[x] = player.chal.comps[x].max(tmp.chal.bulk[x].min(tmp.chal.max[x]))
         }
 		if (hasElement(286)) player.chal.comps[13] = player.chal.comps[13].max(tmp.chal.bulk[13].min(tmp.chal.max[13]))
+		if (hasElement(302)) player.chal.comps[14] = player.chal.comps[14].max(tmp.chal.bulk[14].min(tmp.chal.max[14]))
+		if (hasElement(302)) player.chal.comps[15] = player.chal.comps[15].max(tmp.chal.bulk[15].min(tmp.chal.max[15]))
 		calcPrestigeMass(dt, dt_offline)
         calcInfinity(dt, dt_offline)
         calcSupernovaGalaxy(dt, dt_offline)
