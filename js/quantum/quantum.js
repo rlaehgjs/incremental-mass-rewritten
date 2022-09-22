@@ -30,6 +30,7 @@ const QUANTUM = {
     },
     enter(auto=false,force=false,rip=false,bd=false) {
 		if(CHALS.inChal(14) || CHALS.inChal(19))rip = true, player.qu.rip.active = true;
+		if(player.gc.active && player.gc.rip)rip = true, player.qu.rip.active = true;
         if (tmp.qu.gain.gte(1) || force) {
             if (player.confirms.qu&&!auto&&!force) if (confirm("Are you sure to go Quantum? Going Quantum will reset all previous except QoL mechanicals")?!confirm("ARE YOU SURE ABOUT IT???"):true) return
             if (QCs.active() && !rip && !bd && !player.qu.rip.active) {

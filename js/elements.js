@@ -393,6 +393,7 @@ function updateBlackHoleHTML() {
 	tmp.el.massSoftStart2.setTxt(formatMass(tmp.bh.massSoftGain))
 
 	tmp.el.bhOverflow.setDisplay(tmp.bh.mass_gain.gte(tmp.bhOverflowStart))
+	tmp.el.bhOverflow3.setDisplay(hasElement(327));
 	tmp.el.bhOverflow2.setTxt(format(tmp.bhOverflow))
 	tmp.el.bhEffect.setTxt(format(tmp.bh.effect))
 

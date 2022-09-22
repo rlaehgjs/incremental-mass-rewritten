@@ -153,7 +153,7 @@
             <span id="nr_div">At <span id="next_radiation">0</span> of frequency, unlock <span id="unl_radiation">X</span></span><br><br>
             <div id="radiation_table"></div>
         </div><div id="stab_frame5_4">
-			You have <span id="superGal">0</span> Supernova Galaxies<br>
+			You have <span id="superGal">0</span> <span id="superGalScale"></span>Supernova Galaxies<br>
 			Next at <span id="superGalReq">0</span> Supernova<br>
             <button class="btn" onclick="SUPERNOVA_GALAXY.reset()">Reset for a Supernova Galaxy</button><br>
 			<hr>
@@ -214,7 +214,7 @@
                     </div><div class="resources sml green" id="md_div">
                         <div tooltip="Mass Dilation" t-size="small"><img class="res_img" src="images/md.png" onclick="MASS_DILATION.onactive()" onmousemove="FORMS.reset_msg.set('md')" onmouseleave="FORMS.reset_msg.reset()" style="cursor: pointer;"></div>
                         <span style="margin-left: 5px; text-align: left;" id="md_massAmt">X</span>
-                    </div> <div class="resources sml magenta" id="sn_div">
+                    </div><div class="resources sml" id="sn_div" style="color:#ff009d;">
                         <div tooltip="Supernova" t-size="small"><img class="res_img" src="images/sn.png" onclick="SUPERNOVA.reset(false,false,true)" onmousemove="FORMS.reset_msg.set('sn')" onmouseleave="FORMS.reset_msg.reset()" style="cursor: pointer;"></div>
                         <span style="margin-left: 5px; text-align: left;" id="supernovaAmt">X</span>
                     </div><div class="resources sml light_green" id="qu_div">
@@ -229,10 +229,10 @@
                     </div><div class="resources sml" id="infinity_div">
                         <div tooltip="Infinity Mass" t-size="small"><img class="res_img" src="images/inf.png" onclick="INFINITY_LAYER.enter()" onmousemove="FORMS.reset_msg.set('infinity')" onmouseleave="FORMS.reset_msg.reset()" style="cursor: pointer;"></div>
                         <span style="margin-left: 5px; text-align: left;" id="infAmt">X</span>
-                    </div><div class="resources sml" id="eternity_div" style="color:rgb(255,0,255);">
+                    </div><div class="resources sml" id="eternity_div" style="color:#ff00ff;">
                         <div tooltip="Eternal Mass" t-size="small"><img class="res_img" src="images/et.png" onclick="ETERNITY_LAYER.enter()" onmousemove="FORMS.reset_msg.set('eternity')" onmouseleave="FORMS.reset_msg.reset()" style="cursor: pointer;"></div>
                         <span style="margin-left: 5px; text-align: left;" id="etAmt">X</span>
-                    </div><div class="resources sml magenta" id="superGal_div">
+                    </div><div class="resources sml" id="superGal_div" style="color:#ff009d;">
                         <div tooltip="Supernova Galaxies" t-size="small"><img class="res_img" src="images/sg.png" onclick="SUPERNOVA_GALAXY.reset()" onmousemove="FORMS.reset_msg.set('superGal')" onmouseleave="FORMS.reset_msg.reset()" style="cursor: pointer;"></div>
                         <span style="margin-left: 5px; text-align: left;" id="superGalAmt">X</span>
                     </div><div class="resources sml quark_color" id="galQk_div">
@@ -330,7 +330,7 @@
                         The formula (x + 1)<sup id="bhMassPower2">0.33</sup> softcaps at <b id="bhFSoftStart1">X</b>
                     </span>
 					<br><br>
-                    <span id="bhOverflow" style="color: rgb(255, 255, 255)">Because of Black Hole Overflow, your Black Hole mass gain is raised by <b id="bhOverflow2">X</b>!</span>
+                    <span id="bhOverflow" style="color: rgb(255, 255, 255)">Because of Black Hole Overflow, <span id="bhOverflow3">the exponent of </span>your Black Hole mass gain is raised by <b id="bhOverflow2">X</b>!</span>
                 </div>
             </div><div id="stab_frame0_2">
                 You have <span id="atomicAmt">X</span> Atomic Power<br>
@@ -456,7 +456,8 @@
 				You need to get <span id="gc_goal"></span> supernova to complete the challenge.<br>
 				Difficulty: <span id="gc_diff"></span>/<span id="gc_diff_max"></span><button class="btn" onclick="decGCdiff()">-1</button><button class="btn" onclick="incGCdiff()">+1</button><br>
                 <br><span id="gc_trap2">Trapped Challenges: <span id="gc_trap"></span>/<span id="gc_trap_max"></span><button class="btn" onclick="decGCtrap()">-1</button><button class="btn" onclick="incGCtrap()">+1</button></span><br>
-                <span id="gc_trapu2">Trapped In All U-Fermions: <span id="gc_trapu"></span><button class="btn" onclick="if(!player.gc.active)player.gc.trapu=!player.gc.trapu">Change</button><br></span><button class="btn" onclick="GC.enter()" id="gc_btn">Enter the Galactic Challenge</button>
+                <span id="gc_trapu2">Trapped In All U-Fermions: <span id="gc_trapu"></span><button class="btn" onclick="if(!player.gc.active)player.gc.trapu=!player.gc.trapu">Change</button><br></span>
+                <span id="gc_rip2">Trapped In Big Rip: <span id="gc_rip"></span><button class="btn" onclick="if(!player.gc.active)player.gc.rip=!player.gc.rip">Change</button><br></span><button class="btn" onclick="GC.enter()" id="gc_btn">Enter the Galactic Challenge</button>
             </div>
         </div><div id="tab_frame4">
             <div id="stab_frame4_0">
