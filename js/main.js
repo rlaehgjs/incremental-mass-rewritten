@@ -111,7 +111,7 @@ const FORMS = {
 		if (CHALS.inChal(15) || CHALS.inChal(19))tmp.massOverflowPower = tmp.massOverflowPower.pow(12)
 			
 		tmp.massOverflow = overflow(x,tmp.massOverflowStart,tmp.massOverflowPower).log(x);
-		x = overflow(x,tmp.massOverflowStart,tmp.massOverflowPower);
+		if (!hasUpgrade('exotic',1))x = overflow(x,tmp.massOverflowStart,tmp.massOverflowPower);
         return x
     },
     massSoftGain() {
@@ -359,6 +359,8 @@ const FORMS = {
 			if(player.ranks.oct.gte(9))p2 = p2 ** 0.9
 			if(player.ranks.oct.gte(21))ss2 = ss2.mul(2)
 			if(player.ranks.oct.gte(21))p2 = p2 ** 0.9
+			if(player.ranks.oct.gte(29))ss2 = ss2.mul(2)
+			if(player.ranks.oct.gte(29))p2 = p2 ** 0.98
 			x = overflow(overflow(x,ss,p),ss2,p2)
 			
 			return {step: step, eff: x,  ss: ss}
@@ -590,6 +592,7 @@ const FORMS = {
             md: "Dilate mass, then cancel",
             br: "Big Rip the Dimension, then go back",
             eternity: "Require over 1e2000 of Pre-Quantum Global Speed to become Eternal",
+            exotic: "Require over eee12 g of mass to reset previous features for gain Exotic Matter",
         },
         set(id) {
             if (id=="sn") {
@@ -607,6 +610,10 @@ const FORMS = {
             }
             if (id=="infinity") {
                 player.reset_msg = "Require over "+format(E(Number.MAX_VALUE))+" of Quantum Foam to go Infinity"
+                return
+            }
+            if (id=="exotic") {
+                player.reset_msg = "Require over "+formatMass(new Decimal("eee12"))+" of mass to reset previous features for gain Exotic Matter"
                 return
             }
             player.reset_msg = this.msgs[id]
