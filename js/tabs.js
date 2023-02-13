@@ -34,6 +34,7 @@ const TABS = {
             { id: "Ranks Rewards" },
             { id: "Scaling", unl() { return tmp.scaling ? tmp.scaling.super.length>0 : false } },
             { id: "Prestige Rewards", unl() { return hasUpgrade("br",9) } },
+            { id: "Ascension Rewards", unl() { return hasAscension(0,1) } },
         ],
         3: [
             { id: "Challenges" },

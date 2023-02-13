@@ -352,7 +352,7 @@ const UPGS = {
                 }
             },
             auto_unl() { return player.mainUpg.bh.includes(5) },
-            lens: 20,
+            lens: 23,
             1: {
                 desc: "Boosters adds Musclers.",
                 cost: E(1),
@@ -440,7 +440,7 @@ const UPGS = {
                 desc: "For every OoM of Rage Powers adds Stronger Power at a reduced rate.",
                 cost: E(1e120),
                 effect() {
-                    let ret = player.rp.points.max(1).log10().softcap(200,0.75,0).div(1000)
+                    let ret = player.rp.points.max(1).log10().softcap(200,hasUpgrade('rp',23)?0.8:0.75,0).div(1000)
                     return ret
                 },
                 effDesc(x=this.effect()) {
@@ -515,6 +515,28 @@ const UPGS = {
                     return format(x)+"x"
                 },
             },
+            21: {
+                unl() { return hasUpgrade('exotic',19) },
+                desc: "Super Overpower starts 1.08x later.",
+                cost: E('ee1.04e14'),
+            },
+            22: {
+                unl() { return hasUpgrade('exotic',19) },
+                desc: "Rage Power boost Tickspeed Power.",
+                cost: E('ee1.25e14'),
+                effect() {
+                    let ret = expMult(player.rp.points.add(1e10),player.rp.points.add(1e10).log10().add(1).log10().add(1).log10().div(500).add(0.001));
+                    return ret
+                },
+                effDesc(x=this.effect()) {
+                    return format(x)+"x"
+                },
+            },
+            23: {
+                unl() { return hasUpgrade('exotic',19) },
+                desc: "The softcap of Rage Upgrade 12 is weaker.",
+                cost: E('ee1.5e14'),
+            },
         },
         2: {
             title: "Black Hole Upgrades",
@@ -529,7 +551,7 @@ const UPGS = {
                     player.mainUpg.bh.push(x)
                 }
             },
-            lens: 20,
+            lens: 22,
             1: {
                 desc: "Mass Upgardes no longer spends mass.",
                 cost: E(1),
@@ -609,7 +631,7 @@ const UPGS = {
                 desc: "Mass gain is boosted by OoM of Dark Matters.",
                 cost: E(1e33),
                 effect() {
-                    let ret = E(2).pow(player.bh.dm.add(1).log10().softcap(11600,0.5,0))
+                    let ret = E(2).pow(overflow(player.bh.dm.add(1).log10().softcap(11600,0.5,0),"e5e13",0.2))
                     return ret
                 },
                 effDesc(x=this.effect()) {
@@ -694,6 +716,23 @@ const UPGS = {
                 desc: "The first Black Hole Overflow effect is weaker.",
                 cost: E('ee170'),
             },
+            21: {
+                unl() { return hasUpgrade('exotic',19) },
+                desc: "Dark Matter boost BH Condenser Power.",
+                cost: E('ee1.22e14'),
+                effect() {
+                    let ret = expMult(player.bh.dm.add(1e10),player.bh.dm.add(1e10).log10().add(1).log10().add(1).log10().div(500).add(0.001));
+                    return ret
+                },
+                effDesc(x=this.effect()) {
+                    return format(x)+"x"
+                },
+            },
+            22: {
+                unl() { return hasUpgrade('exotic',19) },
+                desc: "Dark Matter Upgrade 18 boost Galactic Quarks.",
+                cost: E('ee1.5e14'),
+            },
         },
         3: {
             title: "Atom Upgrades",
@@ -717,7 +756,7 @@ const UPGS = {
                 }
             },
             auto_unl() { return hasTree("qol1") },
-            lens: 20,
+            lens: 22,
             1: {
                 desc: "Start with Mass upgrades unlocked.",
                 cost: E(1),
@@ -864,6 +903,16 @@ const UPGS = {
                     return format(x)+"x"
                 },
             },
+            21: {
+                unl() { return hasUpgrade('exotic',19) },
+                desc: "Quark gain formula is better, and raise Electron Power's 2nd effect by 4.",
+                cost: E('ee1.92e11'),
+            },
+            22: {
+                unl() { return hasUpgrade('exotic',19) },
+                desc: "Boost Star Generators gain.",
+                cost: E('ee2.1e11'),
+            },
         },
         4: {
             title: "Big Rip Upgrades",
@@ -878,7 +927,7 @@ const UPGS = {
                 }
             },
             auto_unl() { return false },
-            lens: 20,
+            lens: 22,
             1: {
                 desc: `Start with Hydrogen-1 unlocked in Big Rip.`,
                 cost: E(5),
@@ -996,6 +1045,16 @@ const UPGS = {
                 },
                 effDesc(x=this.effect()) { return "^"+format(x) },
             },
+            21: {
+                unl() { return hasUpgrade('exotic',19) },
+                desc: "Remove Death Shard gain softcap.",
+                cost: E('e1.8e13'),
+            },
+            22: {
+                unl() { return hasUpgrade('exotic',19) },
+                desc: "Change the effect of C14.",
+                cost: E('e1.5e14'),
+            },
         },
         5: {
             title: "Infinity Upgrades",
@@ -1010,7 +1069,7 @@ const UPGS = {
                 }
             },
             auto_unl() { return false },
-            lens: 20,
+            lens: 21,
             1: {
                 desc: `Multiply your quantum times gain by (200+Infinity times). Infinity Mass boost Quantum Foam gain. The actual cost of this upgrade is 1 mg of Infinity Mass.`,
                 cost: E(1e-3),
@@ -1140,6 +1199,11 @@ const UPGS = {
                 desc: `Infinity Mass formula from Death Shards is better, and Death Shard gain softcap is weaker.`,
                 cost: E(1e51),
             },
+            21: {
+                unl() { return hasUpgrade('exotic',19) },
+                desc: "Reduce Supernova Galaxies Requirements.",
+                cost: E('e110000'),
+            },
         },
         6: {
             title: "Exotic Upgrades",
@@ -1154,7 +1218,7 @@ const UPGS = {
                 }
             },
             auto_unl() { return false },
-            lens: 17,
+            lens: 19,
             1: {
                 desc: `Multiply your Eternity times gain by (200+Exotic reset times). Remove Mass and Star Overflow.`,
                 cost: E(1),
@@ -1245,6 +1309,21 @@ const UPGS = {
                 unl() { return hasUpgrade('exotic',15) },
                 desc: "Multiply Exotic Matter gain by (1+Exotic reset times).",
                 cost: E(1e10)
+            },
+            18: {
+                unl() { return hasUpgrade('exotic',15) },
+                desc: "Unlock a new Exotic Boost type.",
+                cost: E(3e11)
+            },
+            19: {
+                unl() { return hasUpgrade('exotic',15) },
+                desc: "Permanently keep all upgrades, and unlock more upgrades.",
+                cost: E(3e12)
+            },
+            20: {
+                unl() { return hasUpgrade('exotic',19) },
+                desc: "Reach the current endgame.",
+                cost: E(1e14)
             },
         },
     },

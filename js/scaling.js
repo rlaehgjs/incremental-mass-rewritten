@@ -318,6 +318,7 @@ function getScalingStart(type, name) {
 		}
 		if (name=="massUpg4") {
 			if (hasPrestige(2,162)) start = start.mul(10/9)
+			if (hasUpgrade('rp',21)) start = start.mul(1.08)
 		}
 	}
 	if (type=="hyper") {
@@ -379,6 +380,7 @@ function getScalingStart(type, name) {
             if (hasUpgrade('exotic',12))start = start.mul(tmp.bd.upgs[4].eff)
 			
 			if (hasPrestige(2,163)) start = start.mul(1e10)
+			if (hasPrestige(2,175)) start = start.mul(1e20)
 				
             if (player.qu.times.gte(1e275) && player.exotic.times.gte(1))start = start.mul(100)
             if (player.qu.times.gte(1e303) && player.exotic.times.gte(1))start = start.mul(1e25)
@@ -415,6 +417,7 @@ function getScalingStart(type, name) {
 			if (hasPrestige(2,84)) start = start.mul(2)
 			if (hasElement(338)) start = start.mul(2)
 			if (hasPrestige(2,156)) start = start.mul(1.2)
+			if (hasAscension(0,1)) start = start.mul(1.2)
 		}
 	}
 	if (name=='supernova') {
