@@ -141,6 +141,7 @@ function calc(dt, dt_offline) {
 		calcPrestigeMass(dt, dt_offline)
         calcInfinity(dt, dt_offline)
         calcSupernovaGalaxy(dt, dt_offline)
+        calcExotic(dt, dt_offline)
     }
 
     tmp.pass = true
@@ -319,6 +320,9 @@ function getPlayerData() {
 			rcb: [E(0), E(0), E(0), E(0)],
 			bp: E(0),
 			boosts: [E(0), E(0), E(0), E(0)],
+			
+			dr: E(0),
+			ds: E(0),
 		},
     }
     for (let x = 0; x < PRES_LEN; x++) s.prestiges.push(E(0))

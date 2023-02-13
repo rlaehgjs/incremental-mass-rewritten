@@ -312,7 +312,7 @@ function getScalingStart(type, name) {
 			if (hasElement(342)) start = start.mul(1.5)
 		}
 		if (name=="superGal") {
-			if (hasUpgrade('exotic',1)) start = start.add(5)
+			if (hasUpgrade('exotic',2)) start = start.add(5)
 			if (hasPrestige(3,19)) start = start.add(5)
 			if (player.qu.times.gte(Number.MAX_VALUE) && player.exotic.times.gte(1)) start = start.add(5)
 		}
@@ -675,6 +675,7 @@ function getScalingPower(type, name) {
 			if (hasPrestige(2,59)) power = power.mul((tmp.prestigeMassEffect||E(1)).pow(0.05))
 			if (hasPrestige(3,18)) power = power.mul((tmp.prestigeMassEffect||E(1)).pow(0.05))
 			if (hasPrestige(2,140)) power = power.mul((tmp.prestigeMassEffect||E(1)).pow(0.05))
+			if (hasPrestige(2,173)) power = power.mul((tmp.prestigeMassEffect||E(1)).pow(0.05))
 		}
 		if (name=="prestige2") {
 			if (hasPrestige(3,4)) power = power.mul(tmp.prestigeMassEffect)

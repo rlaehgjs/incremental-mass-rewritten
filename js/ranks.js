@@ -282,6 +282,7 @@ const RANKS = {
 			'29': "Accelerator effect softcap^2 starts 2x later, and is weaker.",
 			'33': "Accelerator effect softcap^2 is weaker.",
 			'34': "Oct Boost Exotic Matter gain.",
+			'35': "Square Oct 34 Effect.",
 		},
     },
     effect: {
@@ -481,6 +482,7 @@ const RANKS = {
             },
             '34'() {
                 let ret = player.ranks.oct.add(1).log10().pow(2);
+				if(player.ranks.oct.gte(35))ret = ret.pow(2);
                 return ret
             },
 		},
@@ -799,6 +801,7 @@ const PRESTIGES = {
             "162": `Super Overpower starts (10/9)x later.`,
             "163": `Meta-Pent starts 1e10x later.`,
             "165": `Unlock Prestige Rage Power.`,
+            "173": `Add +5% to Glory 59's effectiveness`,
 		},
 		{
             "1": `Remove Hyper Prestige Level scaling.`,
@@ -991,6 +994,7 @@ const PRESTIGES = {
                 let x = 5;
 				if (hasPrestige(3,18))x += 5;
 				if (hasPrestige(2,140))x += 5;
+				if (hasPrestige(2,173))x += 5;
                 return x
             },x=>x+"% effectiveness"],
             "141": [_=>{

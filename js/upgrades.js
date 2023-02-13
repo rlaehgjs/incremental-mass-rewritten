@@ -1154,7 +1154,7 @@ const UPGS = {
                 }
             },
             auto_unl() { return false },
-            lens: 14,
+            lens: 17,
             1: {
                 desc: `Multiply your Eternity times gain by (200+Exotic reset times). Remove Mass and Star Overflow.`,
                 cost: E(1),
@@ -1184,6 +1184,7 @@ const UPGS = {
 					if(hasUpgrade('exotic',7))ret = ret.mul(2);
 					if(hasUpgrade('exotic',9))ret = ret.mul(2.5);
 					if(hasUpgrade('exotic',14))ret = ret.mul(2);
+					if(hasUpgrade('exotic',16))ret = ret.mul(2);
                     return ret.floor()
                 },
                 effDesc(x=this.effect()) {
@@ -1232,8 +1233,18 @@ const UPGS = {
             },
             15: {
                 unl() { return hasUpgrade('exotic',10) },
-                desc: "Reach the current endgame.",
-                cost: E(50000000)
+                desc: "Unlock Darkness?",
+                cost: E(1e8)
+            },
+            16: {
+                unl() { return hasUpgrade('exotic',15) },
+                desc: "Double the effect of Exotic Upgrade 6.",
+                cost: E(1e9)
+            },
+            17: {
+                unl() { return hasUpgrade('exotic',15) },
+                desc: "Multiply Exotic Matter gain by (1+Exotic reset times).",
+                cost: E(1e10)
             },
         },
     },

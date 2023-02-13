@@ -9,6 +9,12 @@ const EXOTIC = {
         if (hasPrestige(3,21)) x = x.mul(prestigeEff(3,21,E(1)));
         if (hasPrestige(3,22)) x = x.mul(prestigeEff(3,22,E(1)));
 		if (player.ranks.oct.gte(34)) x = x.mul(RANKS.effect.oct[34]())
+		if(hasUpgrade('exotic', 15)){
+			x = x.mul(tmp.ex.dsEff.ex);
+		}
+		if(hasUpgrade('exotic', 17)){
+			x = x.mul(player.exotic.times.add(1));
+		}
         return x.floor()
     },
     gainTimes() {
@@ -29,6 +35,9 @@ const EXOTIC = {
             if (player.confirms.exotic) if (confirm("Are you sure to reset for Exotic Matter? This will reset all previous except QoL mechanicals")?!confirm("ARE YOU SURE ABOUT IT???"):true) return
 			player.exotic.points = player.exotic.points.add(EXOTIC.gain())
             player.exotic.times = player.exotic.times.add(EXOTIC.gainTimes())
+			if(hasUpgrade('exotic', 15)){
+				player.exotic.dr = player.exotic.dr.add(EXOTIC.drGain())
+			}
             this.doReset()
         }
     },
@@ -70,9 +79,35 @@ const EXOTIC = {
             return {pow: pow, eff: x}
         },
     },
+    drGain(){
+        let x = E(1);
+		if(hasUpgrade('exotic', 15)){
+			x = x.mul(tmp.ex.dsEff.ex);
+		}
+		return x;
+    },
+    dsGain(){
+        let x = E(1);
+		if(hasUpgrade('exotic', 15)){
+			x = x.mul(tmp.ex.drEff.ds);
+		}
+		return x;
+    },
+    drEff(){
+		let x = {ds:player.exotic.dr.pow(2)};
+		return x;
+    },
+    dsEff(){
+		let x = {ex:player.exotic.ds.add(1).log10().add(1)};
+		return x;
+    },
 }
 
 function updateExoticTemp() {
+	
+	tmp.ex.drEff = EXOTIC.drEff()
+	tmp.ex.dsEff = EXOTIC.dsEff()
+	
     tmp.ex.gain = EXOTIC.gain()
     tmp.ex.gainTimes = EXOTIC.gainTimes()
 
@@ -91,6 +126,13 @@ function updateExoticTemp() {
 		tmp.ex.exb_eff[i] = EXOTIC_BOOST.effect(i)
 	}
 	
+}
+
+function calcExotic(dt) {
+	if(hasUpgrade('exotic', 15)){
+		player.exotic.dr = player.exotic.dr.max(1);
+		player.exotic.ds = player.exotic.ds.add(EXOTIC.dsGain().mul(dt));
+	}
 }
 
 function updateExoticHTML(){
@@ -122,6 +164,17 @@ function updateExoticHTML(){
 				tmp.el["exb"+i+"_eff"].setTxt(format(tmp.ex.exb_eff[i]))
 				if(i==2)tmp.el["exb"+i+"_div"].changeStyle('display',hasUpgrade('exotic',11)?'':'none');
 			}
+        }
+        if (tmp.stab[7] == 3) {
+            tmp.el.darkRay.setTxt(player.exotic.dr.format(0));
+            tmp.el.darkShadow.setTxt(player.exotic.ds.format(0));
+			tmp.el.drEff.setHTML(`
+					Boosts dark shadow gain by <b>x${tmp.ex.drEff.ds.format(3)}</b>
+				`);
+			tmp.el.dsEff.setHTML(`
+					Boosts exotic matter gain by <b>x${tmp.ex.dsEff.ex.format(3)}</b><br>
+					Boosts dark ray gain by <b>x${tmp.ex.dsEff.ex.format(3)}</b>
+				`);
         }
 }
 
