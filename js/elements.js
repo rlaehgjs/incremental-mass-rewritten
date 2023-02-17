@@ -263,7 +263,7 @@ function updateUpperHTML() {
 		<br>+${tmp.chal.gain} Completions (+1 at ${tmp.chal.format(data.goal)+CHALS.getResName(player.chal.active)})`)
 	}
 	
-	unl = player.atom.unl && player.superGal.lt(10)
+	unl = (player.atom.unl && player.superGal.lt(10)) || hasUpgrade("atom",25)
 	tmp.el.quark_div.setDisplay(unl)
 	if (unl) tmp.el.quarkAmt.setHTML(format(player.atom.quarks,0)+"<br>"+(hasElement(14)?formatGain(player.atom.quarks,tmp.atom?tmp.atom.quarkGain.mul(tmp.atom.quarkGainSec).mul(gs):0):"(+"+format(tmp.atom.quarkGain,0)+")"))
 	
