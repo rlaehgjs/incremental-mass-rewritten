@@ -56,6 +56,7 @@ const TABS = {
             { id: "Radiation", unl() { return tmp.radiation.unl } },
             { id: "Galaxy", unl() { return hasElement(218) || player.superGal.gte(1)} },
             { id: "G-Fermions", unl() { return hasElement(237) } },
+            { id: "Cluster", unl() { return hasElement(387) || player.superCluster.gte(1)} },
         ],
         6: [
             { id: "Chroma" },
