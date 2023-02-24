@@ -119,6 +119,7 @@ const EXOTIC = {
     dsEff(){
 		let x = {ex:player.exotic.ds.add(1).log10().add(1)};
 		if(hasElement(376))x.sn = player.exotic.ds.div(1e20).add(1).log10().div(10).add(1).pow(-1);
+		if(hasElement(394))x.en = expMult(player.exotic.ds.add(2),2).pow(1e4);
 		return x;
     },
 }
@@ -137,6 +138,8 @@ function updateExoticTemp() {
 
 		tmp.ex.rcb_can[i] = player.exotic.points.gte(tmp.ex.rcb_cost[i])
 		tmp.ex.rcb_eff[i] = EXOTIC.rcb.eff(i)
+		
+		if(hasChargedElement(43))player.exotic.rcb[i] = player.exotic.rcb[i].max(tmp.ex.rcb_bulk[i]);
 	}
 	
 	player.exotic.bp = player.exotic.bp.max(EXOTIC_BOOST.gain());
@@ -209,7 +212,8 @@ function updateExoticHTML(){
 					Boosts exotic matter gain by <b>x${tmp.ex.dsEff.ex.format(3)}</b><br>
 					Boosts dark ray gain by <b>x${tmp.ex.dsEff.ex.format(3)}</b><br>`+
 					(hasElement(376)?`Meta-Supernova is <b>${E(100).sub(tmp.ex.dsEff.sn.mul(100)).format(3)}% weaker</b><br>`:"")+
-					(hasElement(382)?`Boosts Galactic Quarks gain by <b>x${tmp.ex.dsEff.ex.format(3)}</b><br>`:"")
+					(hasElement(382)?`Boosts Galactic Quarks gain by <b>x${tmp.ex.dsEff.ex.format(3)}</b><br>`:"")+
+					(hasElement(394)?`Boosts Entropy gain by <b>x${tmp.ex.dsEff.en.format(3)}</b><br>`:"")
 				);
         }
 }
