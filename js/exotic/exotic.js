@@ -28,6 +28,7 @@ const EXOTIC = {
         if (hasAscension(1,1)) x = x.mul(ascensionEff(1,1,E(1)));
         if (hasChargedElement(6)) x = x.mul(tmp.elements.ceffect[6]);
 		x = x.mul(SUPERNOVA_CLUSTER.effects.eff1())
+        if (hasElement(395)) x = x.mul(tmp.elements.effect[395]);
         return x.floor()
     },
     gainTimes() {

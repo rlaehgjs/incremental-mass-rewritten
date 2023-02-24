@@ -2354,6 +2354,21 @@ const ELEMENTS = {
 			cost: E("3e173"),
 			galQk: true,
 		},
+		{
+			desc: `Unlock a new effect of Dark Shadow.`,
+			cost: E("1e45"),
+			ds: true,
+		},
+		{
+			desc: `Eternal Mass boost Exotic Matter gain.`,
+			cost: E("1.5e4906"),
+			et: true,
+			effect() {
+				let x = player.et.points.add(10).log10();
+				return x
+			},
+			effDesc(x) { return format(x)+"x"; },
+		},
 	],
     /*
     {
@@ -2367,7 +2382,7 @@ const ELEMENTS = {
     },
     */
     getUnlLength() {
-		if(hasElement(380))return 393;
+		if(hasElement(380))return 395;
 		if(hasUpgrade("atom",25))return 380;
 		
 		if(player.exotic.times.gte(1))return 362;
