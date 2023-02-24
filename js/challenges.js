@@ -497,7 +497,7 @@ const CHALS = {
         start: E(1.989e38),
         effect(x) {
             if (hasElement(64)) x = x.mul(1.5)
-			if(hasChargedElement(33))return expMult(x,2.62);
+			if(hasChargedElement(33))return expMult(x.add(1),2.62);
             let ret = x.root(1.75).mul(0.02).add(1)
 			if(hasElement(310))return ret;
             return ret.softcap(2.3,0.25,0)
