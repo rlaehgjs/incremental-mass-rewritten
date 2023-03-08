@@ -108,7 +108,7 @@ const CHALS = {
 			if(x == 16 && chal_reset == false){
 				player.prestigeMass = E(0);
 			}
-		}else {
+		}else if (x < 21) {
 			ETERNITY_LAYER.doReset();
 			updateTemp();
 			updateTemp();
@@ -120,6 +120,13 @@ const CHALS = {
 				QUANTUM.enter(false,true,true)
 				player.prestigeMass = E(0);
 			}
+		}else{
+			EXOTIC.doReset();
+			updateTemp();
+			updateTemp();
+			updateTemp();
+			updateTemp();
+			updateTemp();
 		}
     },
     exit(auto=false) {
@@ -163,7 +170,8 @@ const CHALS = {
         if (x < 9) return "Entering challenge will reset with Atoms except previous challenges!"
         if (x < 13) return "Entering challenge will reset without being Supernova!"
         if (x < 17) return "Entering challenge will force an Infinity reset!"
-		return "Entering challenge will force an Eternity reset!"
+		if (x < 21) return "Entering challenge will force an Eternity reset!"
+		return "Entering challenge will force an Exotic reset!"
     },
     getMax(i) {
         if (hasPrestige(1,25) && (i<=11)) return EINF
@@ -264,6 +272,7 @@ const CHALS = {
 		if(hasUpgrade('br',24))x = x.mul(0.8)
         if (hasChargedElement(2)) x = x.mul(0.95)
         if (hasChargedElement(26)) x = x.mul(tmp.elements.ceffect[26])
+        if (hasChargedElement(92)) x = x.mul(0.95)
         return x
     },
     getChalData(x, r=E(-1), y) {
@@ -719,7 +728,22 @@ const CHALS = {
         },
         effDesc(x) { return "^"+format(x) },
     },
-    cols: 20,
+    21: {
+        unl() { return hasElement(438) },
+        title: "No Supernova Galaxies",
+        desc: "Supernova Galaxies, Galactic Resources and Galactic Particles have no effect except QoL effects. Also You're trapped in Galactic Challenge Difficulty 10.",
+        reward: `Super Supernova Galaxies starts later.`,
+		max: E(100),
+		inc: E(1e10),
+		pow: E(10),
+        start: E("4e18493813"),
+        effect(x) {
+			let ret = x.mul(12).min(x.mul(2).add(10));
+			return ret
+        },
+        effDesc(x) { return "+"+format(x)+" later" },
+    },
+    cols: 21,
 }
 
 /*
