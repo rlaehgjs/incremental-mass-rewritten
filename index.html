@@ -24,6 +24,7 @@
 	
     <script src="js/exotic/boost.js"></script>
     <script src="js/exotic/exotic.js"></script>
+    <script src="js/exotic/dark_run.js"></script>
 	
     <script src="js/infinity/infinity.js"></script>
 	
@@ -193,6 +194,9 @@
 			<hr>
 			<div id="superClusterEff">
 			</div>
+			<hr>
+			<span id="galPow6span">You have <span id="galPow6">0</span> Galactic Mass (gain based on Supernova Galaxies), which are boosting Galactic Resources gain in Galaxy Tab by <span id="galPow6_eff">1</span>x<br></span>
+			
         </div>
     </div>
     <div id='app' style='display: none'>
@@ -786,6 +790,15 @@
                         </div>
                     </div>
                 </div>
+                <div id="stab_frame7_4">
+                    While in Dark Run, You are trapped in QC with modifiers [30,30,30,30,30,30,30,30], and Galactic Challenge Difficulty 8.<br>
+					You will gain Glyphic Mass based on  your mass in Dark Run.<br>
+					<button class="btn" onclick="DARK_RUN.enter();">Enter/Exit Dark Run</button><br>
+					You have <span id="dr_points"></span> Glyphic Mass.<br>
+                <div class="table_center">
+                    <div id="dr_upg_table" class="table_center" style="width: 1000px;"></div>
+                </div>
+                </div>
         </div><div id="tab_frame8">
             <button class="btn" onclick="save()">Save</button>
             <button class="btn" onclick="if (confirm('Are you sure you want to RESET your progress to new game?')) {wipe(true)}">Hard Reset</button>
@@ -805,7 +818,7 @@
             <h2>Confirmation Settings</h2><br>
             <div id="confirm_table" class="table_center"></div>
             <br><br>
-            Incremental Mass Rewritten (loader3229's NG+) v0.9.3 - original made by MrRedShark77, modded by loader3229, based on v0.5.4.8<br>
+            Incremental Mass Rewritten (loader3229's v0.5 NG+) v0.9.4 - original made by MrRedShark77, modded by loader3229, based on v0.5.4.8<br>
             The game is inspired by Distance Incremental & Synergism<br><br><br>
             Hint 1: Hover top image above tabs to show description...<br><br>
             Total time played: <span id="total_time">X</span><br><br>
