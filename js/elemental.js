@@ -1627,69 +1627,98 @@ const ELEMENTS = {
 		{
             desc: `Entropic Condenser^2 is 15% weaker.`,
 			cost: E(1.5e217),
+            cdesc: `Entropic Condenser is better.`,
+            ccost: uni("e2.8e8"),
 		},
 		{
             desc: `Permanently remove Pre-Meta Tier scaling.`,
 			cost: E(1.5e221),
+            cdesc: `Meta-Tickspeed scaling starts ^2 later.`,
+            ccost: uni("e2.9e8"),
 		},
 		{
 			desc: `'80%' in Neutron Tree Upgrade [br3] is now 70%.`,
 			cost: uni(1e32),
 			et: true,
+            cdesc: `Death Shards gain ^2.5`,
+            ccost: uni("e565000"),
 		},
 		{
 			desc: `If you're not in Big Rip, Green Chroma's effect ^1.5`,
 			cost: uni(1e36),
 			et: true,
+            cdesc: `Green Chroma's softcap starts weaker.`,
+            ccost: uni("e570000"),
 		},
 		{
 			desc: `Third Rank Collapse effect is weaker.`,
 			cost: uni(1e203),
+            cdesc: `Meta-Hept starts 2x later.`,
+            ccost: uni("e3.4e8"),
 		},
 		{
 			desc: `Add 100 C13 & C16 completions.`,
 			cost: E(9e284),
+            cdesc: `C13 effect is better.`,
+            ccost: uni("e3.5e8"),
 		},
 		{
 			desc: `Remove the first Rank Collapse effect.`,
 			cost: uni(1e45),
 			et: true,
+            cdesc: `Meta-Hept starts 2x later.`,
+            ccost: uni("e660000"),
 		},
 		{
 			desc: `Remove the second Rank Collapse effect.`,
 			cost: uni(1e48),
 			et: true,
+            cdesc: `Meta-Hept starts 2x later.`,
+            ccost: uni("e680000"),
 		},
 		{
 			desc: `Post-20 QC Modifier 'Intense Catalyst' effect scaling is weaker.`,
 			cost: E(1.5e294),
+            cdesc: `Remove all QC Modifier 'Intense Catalyst' effect scaling.`,
+            ccost: uni("e4.2e8"),
 		},
 		{
 			desc: `Add 300 C13 & C15 completions.`,
 			cost: E(6e299),
+            cdesc: `C15 effect is better.`,
+            ccost: uni("e4.4e8"),
 		},
 		{
 			desc: `Remove Super Cosmic Strings scaling.`,
 			cost: uni(1e49),
 			et: true,
+            cdesc: `Square [qu6].`,
+            ccost: uni("e790000"),
 		},
 		{
 			desc: `Break Dilation Upgrade 5 affects Meta-Tier scaling.`,
 			cost: uni(5e51),
 			et: true,
+            cdesc: `Break Dilation Upgrade 5 affects Meta-Hept scaling at a reduced rate.`,
+            ccost: uni("e850000"),
 		},
 		{
 			desc(){return `Meta-Infinity Confirmed! Infinity mass is added to its base gain formula. Cost of this element is ${format(E(2).pow(1024))} grams of Infinity mass.`},
 			cost: E(2).pow(1024),
+            ccost: uni("e555555555"),
 		},
 		{
 			desc: `Add 200 C13 & C16 completions.`,
 			cost: E("6e310"),
+            cdesc: `C13 effect is better.`,
+            ccost: uni("e5.7e8"),
 		},
 		{
 			desc: `Remove Rank Collapse.`,
 			cost: uni(1e54),
 			et: true,
+            cdesc: `Meta-Hex starts ^2 later.`,
+            ccost: uni("e1e6"),
 		},
 		{
 			desc: `Unlock the 17th Challenge.`,
@@ -3631,9 +3660,19 @@ const ELEMENTS = {
 			galQk: true,
 		},
 		{
-			desc: "Reach the current endgame."/*`FSS boost Glyphic Mass gain. Unlock more Neutron Tree Upgrades.`*/,
-			cost: E("1e226"),
+			desc: `Unlock more Neutron Tree Upgrades, Z Axion Generators and Axionic Space.`,
+			cost: E("2e226"),
 			ds: true,
+		},
+		{
+			desc: `Reduce Supernova Requirements. Quantum Challenge Modifier 'Extreme Scaling' doesn't apply to Supernova. Remove Beta Particle effect softcap in Galactic Challenge.`,
+			cost: uni("e580000"),
+			et: true,
+		},
+		{
+			desc: `Unlock Axionic Tree. (in Neutron Tree)`,
+			cost: E("1e500"),
+			exotic: true,
 		},
 	],
     /*
@@ -3648,7 +3687,7 @@ const ELEMENTS = {
     },
     */
     getUnlLength() {
-		if(hasElement(545))return 553;
+		if(hasElement(545))return 556;
 		if(hasElement(542))return 545;
 		if(hasElement(534))return 542;
 		if(hasElement(486)&&player.superCluster.gte(14))return 534;
