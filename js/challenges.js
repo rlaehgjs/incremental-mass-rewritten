@@ -757,7 +757,7 @@ const CHALS = {
     20: {
         unl() { return hasElement(213) },
         title: "Logarithmical Mass",
-        desc: "Mass gain is set to log10(mass gain).",
+        desc: "Mass gain is set to log10(mass gain). Pre-Quantum Global Speed is capped at ee50.",
         reward: `Mass gain is raised by completions.`,
 		max: E(100),
 		inc: E(10),
