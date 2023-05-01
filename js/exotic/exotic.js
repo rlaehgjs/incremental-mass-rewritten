@@ -1,6 +1,6 @@
 const EXOTIC = {
     gain() {
-		let x = player.mass.max(1).log10().max(1).log10().div(1e12)
+		let x = player.mass.max(1).log10().max(1).log10().div(0.01)
         if (x.lt(1)) return E(0)
         x = x.max(0).pow(hasUpgrade('exotic',22)?3:2)
 		if (player.qu.times.gte(1e255) && player.exotic.times.gte(1))x = x.mul(3)
