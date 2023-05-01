@@ -40,7 +40,7 @@ const EXOTIC = {
 		if(hasChargedElement(120))x = x.mul(tmp.elements.ceffect[120]);
 		if(hasElement(486))x = x.mul(MATTERS.eff(0));
 		if(hasElement(534))x = x.mul(player.exotic.ax[0].add(1));
-            x = x.mul(1e300)
+            x = x.mul(1e30000)
 	    return x.floor()
     },
     gainTimes() {
